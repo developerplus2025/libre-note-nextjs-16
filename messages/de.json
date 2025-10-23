@@ -1,0 +1,29 @@
+{
+  "Navigation": {
+    "LibraryLink": "Library",
+    "PricingLink": "Preisgestaltung",
+    "CreativeLink": "Kreativität",
+    "BlogLink": "Blog",
+    "DesignLink": "Design",
+    "DocsLink": "Dokumente",
+    "RadioLink": "Radio"
+  },
+  "MainTextHome": {
+    "LableBadge": "New",
+    "BadgeText": "Informieren Sie sich über alles, was wir auf Ship 25 angekündigt haben",
+    "TitleHome": "Die nächste Generation der Audio-Zusammenarbeit.",
+    "DescriptionHome": "Tauchen Sie ein in ein nahtloses Musikerlebnis mit unserer hochmodernen Software. Arbeiten Sie mühelos zusammen, entfesseln Sie Ihre Kreativität, verwalten Sie Wiedergabelisten und erstellen Sie Tracks in professioneller Qualität - alles auf einer einzigen leistungsstarken Plattform.",
+    "PrivacyText": "Durch die Nutzung von VS Code stimmen Sie der Lizenz und den Datenschutzbestimmungen zu."
+  },
+  "ButtonText": {
+    "FeedBackText": "Feedback",
+    "SearchText": "Nach Dokumenten suchen",
+    "DownloadText": "Download für Windows",
+    "WatchText": "Watch Demo Now"
+  },
+  "LocaleSwitcher": {
+    "label": "Sprache ändern",
+    "locale": "{locale, select, en {🇺🇸 English} vi {🇻🇳 Tiếng Việt} de {🇩🇪 Deutsch} fr {🇫🇷 Français} es {🇪🇸 Español} it {🇮🇹 Italiano} ja {🇯🇵 日本語} zh {🇨🇳 中文} ko {🇰🇷 한국어} ru {🇷🇺 Русский} other {🌐 Unknown}}"
+  }
+}
+ 

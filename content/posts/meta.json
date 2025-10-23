@@ -1,0 +1,35 @@
+{
+  "title": "Music App",
+  "description": "Documentation for the music software",
+  "icon": "Music",
+  "root": true,
+  "pages": [
+    "---Getting Started---",
+    "index",
+    "interface-overview",
+    "importing-songs",
+    "first-play",
+    "---Playback Features---",
+
+    "---Audio Effects---",
+    "equalizer",
+    "reverb-delay",
+    "custom-fx",
+    "---Library Management---",
+    "organizing-songs",
+    "tag-editing",
+    "smart-playlists",
+    "---Settings---",
+    "themes",
+    "audio-devices",
+    "keyboard-shortcuts",
+    "---Advanced---",
+    "midi-integration",
+    "plugin-support",
+    "developer-mode",
+    "---Troubleshooting---",
+    "no-sound",
+    "app-crashes",
+    "performance"
+  ]
+}

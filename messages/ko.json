@@ -1,0 +1,28 @@
+{
+  "Navigation": {
+    "LibraryLink": "라이브러리",
+    "PricingLink": "가격",
+    "CreativeLink": "창의적인",
+    "BlogLink": "블로그",
+    "DesignLink": "디자인",
+    "DocsLink": "문서",
+    "RadioLink": "라디오"
+  },
+  "MainTextHome": {
+    "LableBadge": "새로운",
+    "BadgeText": "Ship 25에서 발표한 모든 내용을 확인하세요.",
+    "TitleHome": "그만큼 다음 세대 ~의 오디오 협동.",
+    "DescriptionHome": "최첨단 소프트웨어로 완벽한 음악 경험을 만끽하세요. 하나의 강력한 플랫폼에서 손쉽게 협업하고, 창의력을 발휘하고, 플레이리스트를 관리하고, 전문가 수준의 트랙을 제작하세요.",
+    "PrivacyText": "Ship 25에서 발표한 모든 내용을 확인하세요."
+  },
+  "ButtonText": {
+    "FeedBackText": "피드백",
+    "SearchText": "문서 검색",
+    "DownloadText": "Windows용 다운로드",
+    "WatchText": "지금 데모 보기"
+  },
+  "LocaleSwitcher": {
+    "label": "언어 변경",
+    "locale": "{locale, select, en {🇺🇸 English} vi {🇻🇳 Tiếng Việt} de {🇩🇪 Deutsch} fr {🇫🇷 Français} es {🇪🇸 Español} it {🇮🇹 Italiano} ja {🇯🇵 日本語} zh {🇨🇳 中文} ko {🇰🇷 한국어} ru {🇷🇺 Русский} other {🌐 알 수 없음}}"
+  }
+}

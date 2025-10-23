@@ -1,0 +1,1104 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
+
+/*
+  ---break---
+*/
+@custom-variant dark (&:is(.dark *));
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@theme inline {
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --background-image-lp-controls-fade: var(--background-image-lp-controls-fade);
+  --color-lp-accent: var(--lp-accent);
+  --color-lp-primary-foreground: var(--lp-primary-foreground);
+  --color-lp-primary: var(--lp-primary);
+  --lp-timeline-track-height: 4px;
+  --lp-timeline-track-height-active: 7px;
+  --color-lp-timeline-buffered-color: var(--lp-timeline-buffered-color);
+
+}
+/*
+  ---break---
+*/
+:root {
+  --sidebar-docs: #ffffff;
+  --theme-toggle-sun-icon-display: block;
+  --theme-toggle-moon-icon-display: none;
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.141 0.005 285.823);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.141 0.005 285.823);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.141 0.005 285.823);
+  --primary: oklch(0.21 0.006 285.885);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.967 0.001 286.375);
+  --secondary-foreground: oklch(0.21 0.006 285.885);
+  --muted: oklch(0.967 0.001 286.375);
+  --muted-foreground: oklch(0.552 0.016 285.938);
+  --accent: oklch(0.967 0.001 286.375);
+  --accent-foreground: oklch(0.21 0.006 285.885);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.92 0.004 286.32);
+  --input: oklch(0.92 0.004 286.32);
+  --ring: oklch(0.705 0.015 286.067);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.141 0.005 285.823);
+  --sidebar-primary: oklch(0.21 0.006 285.885);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.967 0.001 286.375);
+  --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
+  --sidebar-border: oklch(0.92 0.004 286.32);
+  --sidebar-ring: oklch(0.705 0.015 286.067);
+  --lp-primary: oklch(0.205 0 0);
+  --lp-primary-foreground: oklch(0.985 0 0);
+  --lp-accent: oklch(0.269 0 0);
+  --background-image-lp-controls-fade: linear-gradient(
+          to bottom,
+          hsla(0, 0%, 91%, 0) 0%,
+          hsla(0, 0%, 91%, 0.002) 10.6%,
+          hsla(0, 0%, 91%, 0.008) 19.7%,
+          hsla(0, 0%, 91%, 0.019) 27.6%,
+          hsla(0, 0%, 91%, 0.035) 34.4%,
+          hsla(0, 0%, 91%, 0.057) 40.4%,
+          hsla(0, 0%, 91%, 0.086) 45.7%,
+          hsla(0, 0%, 91%, 0.122) 50.6%,
+          hsla(0, 0%, 91%, 0.165) 55.3%,
+          hsla(0, 0%, 91%, 0.217) 60%,
+          hsla(0, 0%, 91%, 0.278) 65%,
+          hsla(0, 0%, 91%, 0.349) 70.3%,
+          hsla(0, 0%, 91%, 0.43) 76.3%,
+          hsla(0, 0%, 91%, 0.522) 83.1%,
+          hsla(0, 0%, 91%, 0.625) 90.9%,
+          hsla(0, 0%, 91%, 0.74) 100%
+        );
+  --lp-timeline-buffered-color: oklch(0.985 0 0 / 0.4);
+
+}
+/*
+  ---break---
+*/
+.dark {
+
+  --sidebar-docs: #000000;
+  --theme-toggle-sun-icon-display: none;
+  --theme-toggle-moon-icon-display: block;
+  --background: oklch(0% 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.21 0.006 285.885);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0% 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.92 0.004 286.32);
+  --primary-foreground: oklch(0.21 0.006 285.885);
+  --secondary: oklch(0.274 0.006 286.033);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.274 0.006 286.033);
+  --muted-foreground: oklch(0.705 0.015 286.067);
+  --accent: oklch(0.274 0.006 286.033);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(55.6% 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.21 0.006 285.885);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.274 0.006 286.033);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.552 0.016 285.938);
+  --lp-primary: oklch(0.205 0 0);
+  --lp-primary-foreground: oklch(0.985 0 0);
+  --lp-accent: oklch(0.97 0 0);
+  --background-image-lp-controls-fade:  linear-gradient(
+          to bottom,
+          hsla(0, 0%, 0%, 0) 0%,
+          hsla(0, 0%, 0%, 0.009) 8.1%,
+          hsla(0, 0%, 0%, 0.035) 15.5%,
+          hsla(0, 0%, 0%, 0.074) 22.5%,
+          hsla(0, 0%, 0%, 0.125) 29%,
+          hsla(0, 0%, 0%, 0.184) 35.3%,
+          hsla(0, 0%, 0%, 0.25) 41.2%,
+          hsla(0, 0%, 0%, 0.32) 47.1%,
+          hsla(0, 0%, 0%, 0.39) 52.9%,
+          hsla(0, 0%, 0%, 0.46) 58.8%,
+          hsla(0, 0%, 0%, 0.526) 64.7%,
+          hsla(0, 0%, 0%, 0.585) 71%,
+          hsla(0, 0%, 0%, 0.636) 77.5%,
+          hsla(0, 0%, 0%, 0.675) 84.5%,
+          hsla(0, 0%, 0%, 0.701) 91.9%,
+          hsla(0, 0%, 0%, 0.71) 100%
+        );
+  --lp-timeline-buffered-color: oklch(0.985 0 0 / 0.4);
+}
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@layer base {
+  .docs-title.active {
+    font-size: 0.875rem /* 14px */;
+    line-height: 1.25rem /* 20px */;
+    color: white;
+  }
+  .docs-title {
+    font-size: 0.875rem /* 14px */;
+    line-height: 1.25rem /* 20px */;
+    color: #a1a1a1;
+  }
+  .antialiased {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  .active {
+    color: white;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  @media (prefers-color-scheme: dark) {
+    .icon-preview {
+      filter: invert(1);
+    }
+  }
+
+  .custom_command_scroll {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-color) transparent;
+  }
+  .navigation-menu_arrow__sM_lS {
+    width: 32px;
+    height: 32px;
+    transform: rotate(180deg);
+  }
+  [cmdk-list] {
+    min-height: 300px;
+    height: var(--cmdk-list-height);
+    max-height: 600px;
+    transition: height 100ms ease;
+  }
+  .fill_logo_svg {
+    fill: var(--fill-logo-svg);
+  }
+  .webfilm-class {
+    display: none !important;
+  }
+  .embla {
+    max-width: screen;
+    margin: auto;
+    --slide-height: 150px;
+    --slide-spacing: 1rem;
+    --slide-size: 20%;
+  }
+  .embla_home {
+    max-width: screen;
+    margin: auto;
+    --slide-height: 150px;
+    --slide-spacing: 1rem;
+    --slide-size: 100%;
+  }
+  .embla__viewport {
+    overflow: hidden;
+  }
+  .embla__container {
+    backface-visibility: hidden;
+    display: flex;
+    touch-action: pan-y pinch-zoom;
+    margin-left: calc(var(--slide-spacing) * -1);
+  }
+  .embla__slide {
+    flex: 0 0 var(--slide-size);
+    min-width: 0;
+    padding-left: var(--slide-spacing);
+  }
+  .embla__slide_home {
+    flex: 0 0 var(--slide-size);
+    min-width: 0;
+    padding-left: var(--slide-spacing-home);
+  }
+  .embla__slide__number {
+    box-shadow: inset 0 0 0 1px var(--detail-medium-contrast);
+    border-radius: 6px;
+    font-size: 4rem;
+    font-weight: 600;
+    display: flex;
+    padding: 2px;
+    align-items: center;
+    justify-content: center;
+    height: var(--slide-height);
+    user-select: none;
+  }
+  .embla__controls {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    justify-content: space-between;
+    gap: 1.2rem;
+  }
+  .embla__buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+    align-items: center;
+  }
+  .embla__button {
+    -webkit-tap-highlight-color: rgba(var(--text-high-contrast-rgb-value), 0.5);
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    touch-action: manipulation;
+    display: inline-flex;
+    text-decoration: none;
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    box-shadow: inset 0 0 0 1px var(--detail-medium-contrast);
+    width: 2rem;
+    height: 2rem;
+    z-index: 1;
+    border-radius: 50%;
+    color: var(--text-body);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .embla__button:disabled {
+    color: var(--detail-high-contrast);
+  }
+  .embla__button__svg {
+    width: 35%;
+    height: 35%;
+  }
+  .embla__dots {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .embla__dot {
+    -webkit-tap-highlight-color: rgba(var(--text-high-contrast-rgb-value), 0.5);
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    touch-action: manipulation;
+    gap: 2rem;
+    display: inline-flex;
+    text-decoration: none;
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  .embla__dot:after {
+    box-shadow: inset 0 0 0 3px var(--detail-medium-contrast);
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    content: "";
+  }
+  .embla__dot--selected:after {
+    box-shadow: inset 0 0 0 3px var(--text-body);
+  }
+  .title_bar {
+    -webkit-app-region: drag;
+  }
+  .title_bar_no {
+    -webkit-app-region: no-drag;
+  }
+  .loading_skeleton {
+    background-image: linear-gradient(270deg, #111, #333, #333, #111);
+    background-size: 400% 100%;
+    animation: skeleton_loading__qBdUw 8s ease-in-out infinite;
+  }
+  @keyframes skeleton_loading__qBdUw {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .bg-df {
+    color: #159deb;
+  }
+  .radix-themes {
+    --spinner-animation-duration: 800ms;
+    --spinner-opacity: 0.65;
+  }
+  .tabs_indicator__lFbpm {
+    --ds-gray-alpha-400: hsla(0, 0%, 100%, 0.14);
+    --ds-background-100: hsl(0, 0%, 5%);
+    border: 1px solid var(--ds-gray-alpha-400);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+    background: var(--ds-background-100);
+    background-clip: padding-box !important;
+  }
+
+  .video {
+    border-radius: 6px;
+  }
+  .overlay {
+    --color--transparent: #fff0;
+    --color--background-main: #000000;
+    background-image: linear-gradient(
+      90deg,
+      var(--color--background-main) 23%,
+      var(--color--transparent)
+    );
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    inset: 0% auto 0% 0%;
+  }
+  .overlay.right {
+    --color--transparent: #fff0;
+    --color--background-main: #000000;
+    background-image: linear-gradient(
+      90deg,
+      var(--color--transparent),
+      var(--color--background-main) 77%
+    );
+    inset: 0% 0% 0% auto;
+  }
+  :host {
+    background-color: #000000;
+  }
+  media-error-dialog {
+    background-color: #000000;
+  }
+  number-flow-react::part(suffix) {
+    padding-left: 8px;
+    font-weight: normal;
+    font-size: 1rem;
+    color: #828182;
+  }
+  #nd-docs-layout {
+    background-color: var(--sidebar-docs);
+  }
+  #nd-sidebar {
+    background-color: var(--sidebar-docs);
+  }
+  .bg-fd-card {
+    background-color: var(--sidebar-docs);
+  }
+
+  /* .slide-in {
+    z-index: 50;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #000000;
+    transform-origin: bottom;
+  }
+  .slide-out {
+    z-index: 50;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #000000;
+    transform-origin: top;
+  } */
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+@keyframes typing {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(-2px);
+    opacity: 1;
+  }
+}
+
+@keyframes loading-dots {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes wave {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.6);
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes text-blink {
+  0%,
+  100% {
+    color: var(--primary);
+  }
+  50% {
+    color: var(--muted-foreground);
+  }
+}
+
+@keyframes bounce-dots {
+  0%,
+  100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+@keyframes thin-pulse {
+  0%,
+  100% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.4;
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer-text {
+  0% {
+    background-position: 150% center;
+  }
+  100% {
+    background-position: -150% center;
+  }
+}
+
+@keyframes wave-bars {
+  0%,
+  100% {
+    transform: scaleY(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scaleY(0.6);
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 50%;
+  }
+  100% {
+    background-position: -200% 50%;
+  }
+}
+
+@keyframes spinner-fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.custom_scroll::-webkit-scrollbar {
+  width: 10px !important;
+}
+.custom_scroll::-webkit-scrollbar-track {
+  background-color: transparent !important;
+}
+
+.custom_scroll::-webkit-scrollbar-thumb {
+  background-color: var(--border) !important;
+}
+.search_input-blog:focus ~ & {
+  animation: pulseAttention 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) forwards
+    infinite;
+}
+/**
+* @license
+*
+* Font Family: Bespoke Stencil
+* Designed by: Jérémie Hornus, Théo Guillard, Morgane Pambrun, Alisa Nowak, Joachim Vu
+* URL: https://www.fontshare.com/fonts/bespoke-stencil
+* © 2025 Indian Type Foundry
+*
+* Bespoke Stencil Light 
+* Bespoke Stencil LightItalic 
+* Bespoke Stencil Regular 
+* Bespoke Stencil Italic 
+* Bespoke Stencil Medium 
+* Bespoke Stencil MediumItalic 
+* Bespoke Stencil Bold 
+* Bespoke Stencil BoldItalic 
+* Bespoke Stencil Extrabold 
+* Bespoke Stencil ExtraboldItalic 
+* Bespoke Stencil Variable (Variable font)
+* Bespoke Stencil VariableItalic (Variable font)
+
+*
+*/
+@font-face {
+  font-family: "BespokeStencil-Light";
+  src:
+    url("../fonts/BespokeStencil-Light.woff2") format("woff2"),
+    url("../fonts/BespokeStencil-Light.woff") format("woff"),
+    url("../fonts/BespokeStencil-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "BespokeStencil-LightItalic";
+  src:
+    url("../fonts/BespokeStencil-LightItalic.woff2") format("woff2"),
+    url("../fonts/BespokeStencil-LightItalic.woff") format("woff"),
+    url("../fonts/BespokeStencil-LightItalic.ttf") format("truetype");
+  font-weight: 300;
+  font-display: swap;
+  font-style: italic;
+}
+@font-face {
+  font-family: "BespokeStencil-Regular";
+  src:
+    url("../fonts/BespokeStencil-Regular.woff2") format("woff2"),
+    url("../fonts/BespokeStencil-Regular.woff") format("woff"),
+    url("../fonts/BespokeStencil-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "BespokeStencil-Italic";
+  src:
+    url("../fonts/BespokeStencil-Italic.woff2") format("woff2"),
+    url("../fonts/BespokeStencil-Italic.woff") format("woff"),
+    url("../fonts/BespokeStencil-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+  font-style: italic;
+}
+@font-face {
+  font-family: "BespokeStencil-Medium";
+  src:
+    url("../fonts/BespokeStencil-Medium.woff2") format("woff2"),
+    url("../fonts/BespokeStencil-Medium.woff") format("woff"),
+    url("../fonts/BespokeStencil-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "BespokeStencil-MediumItalic";
+  src:
+    url("../fonts/BespokeStencil-MediumItalic.woff2") format("woff2"),
+    url("../fonts/BespokeStencil-MediumItalic.woff") format("woff"),
+    url("../fonts/BespokeStencil-MediumItalic.ttf") format("truetype");
+  font-weight: 500;
+  font-display: swap;
+  font-style: italic;
+}
+@font-face {
+  font-family: "BespokeStencil-Bold";
+  src:
+    url("../fonts/BespokeStencil-Bold.woff2") format("woff2"),
+    url("../fonts/BespokeStencil-Bold.woff") format("woff"),
+    url("../fonts/BespokeStencil-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "BespokeStencil-BoldItalic";
+  src:
+    url("../fonts/BespokeStencil-BoldItalic.woff2") format("woff2"),
+    url("../fonts/BespokeStencil-BoldItalic.woff") format("woff"),
+    url("../fonts/BespokeStencil-BoldItalic.ttf") format("truetype");
+  font-weight: 700;
+  font-display: swap;
+  font-style: italic;
+}
+@font-face {
+  font-family: "BespokeStencil-Extrabold";
+  src:
+    url("../fonts/BespokeStencil-Extrabold.woff2") format("woff2"),
+    url("../fonts/BespokeStencil-Extrabold.woff") format("woff"),
+    url("../fonts/BespokeStencil-Extrabold.ttf") format("truetype");
+  font-weight: 800;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "BespokeStencil-ExtraboldItalic";
+  src:
+    url("../fonts/BespokeStencil-ExtraboldItalic.woff2") format("woff2"),
+    url("../fonts/BespokeStencil-ExtraboldItalic.woff") format("woff"),
+    url("../fonts/BespokeStencil-ExtraboldItalic.ttf") format("truetype");
+  font-weight: 800;
+  font-display: swap;
+  font-style: italic;
+}
+/**
+* This is a variable font
+* You can control variable axes as shown below:
+* font-variation-settings: wght 800.0;
+*
+* available axes:
+'wght' (range from 300.0 to 800.0
+*/
+@font-face {
+  font-family: "BespokeStencil-Variable";
+  src:
+    url("../fonts/BespokeStencil-Variable.woff2") format("woff2"),
+    url("../fonts/BespokeStencil-Variable.woff") format("woff"),
+    url("../fonts/BespokeStencil-Variable.ttf") format("truetype");
+  font-weight: 300 800;
+  font-display: swap;
+  font-style: normal;
+}
+/**
+* This is a variable font
+* You can control variable axes as shown below:
+* font-variation-settings: wght 800.0;
+*
+* available axes:
+'wght' (range from 300.0 to 800.0
+*/
+@font-face {
+  font-family: "BespokeStencil-VariableItalic";
+  src:
+    url("../fonts/BespokeStencil-VariableItalic.woff2") format("woff2"),
+    url("../fonts/BespokeStencil-VariableItalic.woff") format("woff"),
+    url("../fonts/BespokeStencil-VariableItalic.ttf") format("truetype");
+  font-weight: 300 800;
+  font-display: swap;
+  font-style: italic;
+}
+
+.dark .vercel [cmdk-root] {
+  max-width: 640px;
+  width: 100%;
+  padding: 8px;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: var(--font-sans);
+  border: 1px solid var(--gray6);
+  box-shadow: var(--cmdk-shadow);
+  transition: transform 0.1s ease;
+  outline: none;
+}
+
+.vercel [cmdk-root] {
+  max-width: 640px;
+  width: 100%;
+  padding: 8px;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: var(--font-sans);
+  border: 1px solid var(--gray6);
+  box-shadow: var(--cmdk-shadow);
+  transition: transform 0.1s ease;
+  outline: none;
+  background: hsla(0, 0%, 9%, 0.7);
+}
+
+.vercel [cmdk-input] {
+  font-family: var(--font-sans);
+  border: none;
+  width: 100%;
+  font-size: 17px;
+  padding: 8px 8px 16px;
+  outline: none;
+  background: var(--bg);
+  color: var(--gray12);
+  border-bottom: 1px solid var(--gray6);
+  margin-bottom: 16px;
+  border-radius: 0;
+}
+
+.vercel [cmdk-input]::placeholder {
+  color: var(--gray9);
+}
+
+.vercel [cmdk-vercel-badge] {
+  height: 20px;
+  background: var(--grayA3);
+  display: inline-flex;
+  padding: 0 8px;
+  font-size: 12px;
+  color: var(--grayA11);
+  border-radius: 4px;
+  margin: 4px 0 4px 4px;
+  text-transform: capitalize;
+  font-weight: 500;
+}
+
+.vercel [cmdk-item],
+.vercel [cmdk-vercel-badge] {
+  align-items: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.vercel [cmdk-item] {
+  content-visibility: auto;
+  cursor: pointer;
+  height: 48px;
+  border-radius: 8px;
+  font-size: 14px;
+  display: flex;
+  gap: 8px;
+  padding: 0 16px;
+  color: var(--gray11);
+  will-change: background, color;
+  transition: all 0.15s ease;
+  transition-property: none;
+}
+
+.vercel [cmdk-item][data-selected="true"] {
+  background: var(--grayA3);
+  color: var(--gray12);
+}
+
+.vercel [cmdk-item][data-disabled="true"] {
+  color: var(--gray8);
+  cursor: not-allowed;
+}
+
+.vercel [cmdk-item]:active {
+  transition-property: background;
+  background: var(--gray4);
+}
+
+.vercel [cmdk-item] + [cmdk-item] {
+  margin-top: 4px;
+}
+
+.vercel [cmdk-item] svg {
+  width: 18px;
+  height: 18px;
+}
+
+.vercel [cmdk-list] {
+  height: min(330px, var(--cmdk-list-height));
+  max-height: 400px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  transition: 0.1s ease;
+  transition-property: height;
+}
+
+.vercel [cmdk-vercel-shortcuts] {
+  display: flex;
+  margin-left: auto;
+  gap: 8px;
+}
+
+.vercel [cmdk-vercel-shortcuts] kbd {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  min-width: 20px;
+  padding: 4px;
+  height: 20px;
+  border-radius: 4px;
+  color: var(--gray11);
+  background: var(--gray4);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+}
+
+.vercel [cmdk-separator] {
+  height: 1px;
+  width: 100%;
+  background: var(--gray5);
+  margin: 4px 0;
+}
+
+.vercel :not([hidden]) + [cmdk-group] {
+  margin-top: 8px;
+}
+
+.vercel [cmdk-group-heading] {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  font-size: 12px;
+  padding: 0 8px;
+  margin-bottom: 8px;
+}
+
+.vercel [cmdk-empty],
+.vercel [cmdk-group-heading] {
+  color: var(--gray11);
+  display: flex;
+  align-items: center;
+}
+
+.vercel [cmdk-empty] {
+  font-size: 14px;
+  justify-content: center;
+  height: 48px;
+  white-space: pre-wrap;
+}
+
+.mask-logo-animation {
+  -webkit-mask-image: -webkit-linear-gradient(
+    30deg,
+    black 25%,
+    rgba(0, 0, 0, 0.2) 50%,
+    black 75%
+  );
+  mask-image: -webkit-linear-gradient(
+    30deg,
+    black 25%,
+    rgba(0, 0, 0, 0.2) 50%,
+    black 75%
+  );
+  mask-image: -moz-linear-gradient(
+    30deg,
+    black 25%,
+    rgba(0, 0, 0, 0.2) 50%,
+    black 75%
+  );
+  mask-image: -o-linear-gradient(
+    30deg,
+    black 25%,
+    rgba(0, 0, 0, 0.2) 50%,
+    black 75%
+  );
+  mask-image: linear-gradient(
+    60deg,
+    black 25%,
+    rgba(0, 0, 0, 0.2) 50%,
+    black 75%
+  );
+  -webkit-mask-size: 400%;
+  mask-size: 400%;
+  -webkit-mask-position: 0%;
+  mask-position: 0%;
+}
+.mask-logo-animation:hover {
+  -webkit-mask-position: 100%;
+  mask-position: 100%;
+  -webkit-transition:
+    mask-position 1s ease,
+    -webkit-mask-position 1s ease;
+  -moz-transition:
+    mask-position 1s ease,
+    -webkit-mask-position 1s ease;
+  -o-transition:
+    mask-position 1s ease,
+    -webkit-mask-position 1s ease;
+  transition:
+    mask-position 1s ease,
+    -webkit-mask-position 1s ease;
+}
+number-flow-react::part(suffix) {
+  color: #a1a1a1;
+}
+.styled-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #eaeaea transparent;
+}
+/* #nd-docs-layout {
+  --fd-sidebar-width: 0px !important;
+  flex-direction: row !important;
+} */
+#nd-toc {
+  --fd-banner-height: 84px !important;
+  top: 5rem !important;
+}
+hr {
+  border-color: var(--input) !important;
+}
+.theme-switcher_clipPathReveal__l8VbV {
+  clip-path: inset(0 0 100% 0);
+  animation: theme-switcher_revealClipPath__SdLHT 1s
+    cubic-bezier(0.77, 0, 0.175, 1) forwards;
+}
+@keyframes theme-switcher_revealClipPath__SdLHT {
+  0% {
+    clip-path: inset(0 0 100% 0);
+  }
+  100% {
+    clip-path: inset(0 0 -1px 0);
+  }
+}
+
+/*
+  ---break---
+*/
+/*
+  ---break---
+*/
+/*
+  ---break---
+*/
+@utility focus-area {
+    position: relative;
+  &:before {
+    position: absolute;
+    content: "";
+    inset: calc(var(--y) * 1px) calc(var(--x) * 1px);
+
+  }
+
+}
+/*
+  ---break---
+*/
+@utility focus-area-x-* {
+    --x: --value(number);
+
+}
+/*
+  ---break---
+*/
+@utility focus-area-y-* {
+    --y: --value(number);
+
+}
+/*
+  ---break---
+*/
+@utility -focus-area-x-* {
+    --x: --value(number) * -1;
+
+}
+/*
+  ---break---
+*/
+@utility -focus-area-y-* {
+    --y: --value(number) * -1;
+
+}

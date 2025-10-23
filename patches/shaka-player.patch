@@ -1,0 +1,21 @@
+diff --git a/dist/shaka-player.compiled.d.ts b/dist/shaka-player.compiled.d.ts
+index f6fafcf74d83b33dcf39a3065b16fa003b1b8055..44197bab41e43db1be6e2a9032850d1cfba4946d 100644
+--- a/dist/shaka-player.compiled.d.ts
++++ b/dist/shaka-player.compiled.d.ts
+@@ -5624,3 +5624,5 @@ declare namespace shaka.extern {
+ declare namespace shaka.extern {
+   type TransmuxerPlugin = ( ) => shaka.extern.Transmuxer ;
+ }
++export as namespace shaka;
++export = shaka;
+diff --git a/dist/shaka-player.compiled.debug.d.ts b/dist/shaka-player.compiled.debug.d.ts
+index 0f05030752f88fdfca7a9c682e2dfef99e6c0ee4..7fd698a8d337bcb8c96d725a12089ed58f8f0865 100644
+--- a/dist/shaka-player.compiled.debug.d.ts
++++ b/dist/shaka-player.compiled.debug.d.ts
+@@ -5624,3 +5624,6 @@ declare namespace shaka.extern {
+ declare namespace shaka.extern {
+   type TransmuxerPlugin = ( ) => shaka.extern.Transmuxer ;
+ }
++import * as shakaTypes from "./shaka-player.compiled";
++
++export = shakaTypes;

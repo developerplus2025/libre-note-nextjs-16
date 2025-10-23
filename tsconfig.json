@@ -1,0 +1,49 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "baseUrl": ".",
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "content-collections": ["./.content-collections/generated"],
+      "@/content/*": ["content/*"],
+      "@settings": ["./settings"],
+      "@/components/gsap/": ["./components/gsap/*"],
+      "@/content-collections": ["./content-collections.ts"],
+      "@/.source": ["./.source/index.ts"],
+      "@/*": ["./src/*", "source.ts", "./markdown"],
+      "contentlayer/generated": ["./.contentlayer/generated"],
+      "#site/content": ["./.velite"]
+    },
+    "target": "ES2017"
+  },
+  "include": [
+    "video.d.ts",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "svg.preview.background": "white",
+  "githubPullRequests.ignoredPullRequestBranches": ["main"],
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnPaste": true
+}

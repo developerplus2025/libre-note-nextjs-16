@@ -1,0 +1,34 @@
+import React from "react"
+import { Slot } from "@radix-ui/react-slot"
+
+import { Button } from "@/components/ui/button"
+import { useVolume } from "@/hooks/limeplay/use-volume"
+import { useMediaStore } from "@/components/limeplay/media-provider"
+
+export interface MuteControlProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  asChild?: boolean
+}
+
+export const MuteControl = React.forwardRef<
+  HTMLButtonElement,
+  MuteControlProps
+>((props, forwardedRef) => {
+  const mediaRef = useMediaStore((state) => state.mediaRef)
+  const Comp = props.asChild ? Slot : Button
+  const { toggleMute } = useVolume()
+
+  return (
+    <Comp
+      disabled={!mediaRef.current}
+      data-slot="mute-control"
+      {...props}
+      ref={forwardedRef}
+      onClick={toggleMute}
+      aria-label="Mute (keyboard shortcut m)"
+      aria-keyshortcuts="m"
+    />
+  )
+})
+
+MuteControl.displayName = "MuteControl"

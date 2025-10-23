@@ -1,0 +1,18 @@
+ignoredBuiltDependencies:
+  - '@heroui/shared-utils'
+  - contentlayer
+  - contentlayer2
+  - core-js
+  - electron
+  - esbuild
+  - protobufjs
+  - sharp
+  - unrs-resolver
+
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - bcrypt
+  - better-sqlite3
+
+patchedDependencies:
+  shaka-player: patches/shaka-player.patch

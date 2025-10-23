@@ -1,0 +1,15 @@
+{
+  "Navigation": {
+    "LibraryLink": "ライブラリ",
+    "PricingLink": "価格",
+    "CreativeLink": "クリエイティブ",
+    "BlogLink": "ブログ",
+    "DesignLink": "デザイン",
+    "DocsLink": "ドキュメント",
+    "RadioLink": "ラジオ"
+  },
+  "LocaleSwitcher": {
+    "label": "言語を変更",
+    "locale": "{locale, select, en {🇺🇸 English} vi {🇻🇳 Tiếng Việt} de {🇩🇪 Deutsch} fr {🇫🇷 Français} es {🇪🇸 Español} it {🇮🇹 Italiano} ja {🇯🇵 日本語} zh {🇨🇳 中文} ko {🇰🇷 한국어} ru {🇷🇺 Русский} other {🌐 不明}}"
+  }
+}

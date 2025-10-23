@@ -1,0 +1,15 @@
+{
+  "Navigation": {
+    "LibraryLink": "资料库",
+    "PricingLink": "定价",
+    "CreativeLink": "创意",
+    "BlogLink": "部落格",
+    "DesignLink": "设计",
+    "DocsLink": "文件",
+    "RadioLink": "广播"
+  },
+  "LocaleSwitcher": {
+    "label": "更改语言",
+    "locale": "{locale, select, en {🇺🇸 English} vi {🇻🇳 Tiếng Việt} de {🇩🇪 Deutsch} fr {🇫🇷 Français} es {🇪🇸 Español} it {🇮🇹 Italiano} ja {🇯🇵 日本語} zh {🇨🇳 中文} ko {🇰🇷 한국어} ru {🇷🇺 Русский} other {🌐 未知}}"
+  }
+}

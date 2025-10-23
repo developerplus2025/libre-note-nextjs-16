@@ -1,0 +1,28 @@
+{
+  "Navigation": {
+    "LibraryLink": "Library",
+    "PricingLink": "Pricing",
+    "CreativeLink": "Creativity",
+    "BlogLink": "Blog",
+    "DesignLink": "Design",
+    "DocsLink": "Docs",
+    "RadioLink": "Radio"
+  },
+  "MainTextHome": {
+    "LableBadge": "New",
+    "BadgeText": "Catch up with everything we announced at Ship 25",
+    "TitleHome": "The Open Source AI Music Studio",
+    "DescriptionHome": "Dive into a seamless music experience with our cutting edge software. Collaborate effortlessly, unleash your creativity, manage playlists and craft professional quality tracks all in one powerful platform.",
+    "PrivacyText": "By using LibreNote, you agree to its license and privacy statement."
+  },
+  "ButtonText": {
+    "FeedBackText": "Feedback",
+    "SearchText": "Search for documents",
+    "DownloadText": "Download for Windows",
+    "WatchText": "Watch Demo Now"
+  },
+  "LocaleSwitcher": {
+    "label": "Change language",
+    "locale": "{locale, select, en {🇺🇸 English} vi {🇻🇳 Tiếng Việt} de {🇩🇪 Deutsch} fr {🇫🇷 Français} es {🇪🇸 Español} it {🇮🇹 Italiano} ja {🇯🇵 日本語} zh {🇨🇳 中文} ko {🇰🇷 한국어} ru {🇷🇺 Русский} other {🌐 Unknown}}"
+  }
+}

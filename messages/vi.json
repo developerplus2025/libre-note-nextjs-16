@@ -1,0 +1,28 @@
+{
+  "Navigation": {
+    "LibraryLink": "Thư viện",
+    "PricingLink": "Giá cả",
+    "CreativeLink": "Sáng tạo",
+    "BlogLink": "Blog",
+    "DesignLink": "Thiết kế",
+    "DocsLink": "Tài liệu",
+    "RadioLink": "Radio"
+  },
+  "MainTextHome": {
+    "LableBadge": "Mới",
+    "BadgeText": "Cập nhật tất cả những gì chúng tôi đã công bố tại Ship 25",
+    "TitleHome": "Thế hệ tiếp theo của hợp tác âm thanh.",
+    "DescriptionHome": "Khám phá trải nghiệm âm nhạc liền mạch với phần mềm tiên tiến của chúng tôi. Hợp tác một cách dễ dàng, phát huy sự sáng tạo, quản lý danh sách phát và tạo ra các bản nhạc chất lượng chuyên nghiệp tất cả trong một nền tảng mạnh mẽ.",
+    "PrivacyText": "Bằng cách sử dụng VS Code, bạn đồng ý với giấy phép và tuyên bố quyền riêng tư của nó."
+  },
+  "ButtonText": {
+    "FeedBackText": "Phản hồi",
+    "SearchText": "Tìm kiếm tài liệu",
+    "DownloadText": "Tải xuống cho Windows",
+    "WatchText": "Xem demo ngay"
+  },
+  "LocaleSwitcher": {
+    "label": "Thay đổi ngôn ngữ",
+    "locale": "{locale, select, en {🇺🇸 Tiếng Anh} vi {🇻🇳 Tiếng Việt} de {🇩🇪 Tiếng Đức} fr {🇫🇷 Tiếng Pháp} es {🇪🇸 Tiếng Tây Ban Nha} it {🇮🇹 Tiếng Ý} ja {🇯🇵 Tiếng Nhật} zh {🇨🇳 Tiếng Trung} ko {🇰🇷 Tiếng Hàn} ru {🇷🇺 Tiếng Nga} other {🌐 Không xác định}}"
+  }
+}
