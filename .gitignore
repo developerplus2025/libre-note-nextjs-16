@@ -50,3 +50,4 @@ dist/
 .env.local
 
 .content-collections
+.env*.local
