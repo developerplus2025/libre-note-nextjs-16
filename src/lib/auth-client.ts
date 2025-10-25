@@ -1,5 +1,5 @@
 import { createAuthClient } from "better-auth/react";
 
 export const authClient = createAuthClient({
-  baseURL: "https://decent-over.vercel.app/api/auth",
+  baseURL: "https://libre-note-nextjs-16.vercel.app/api/auth",
 });
