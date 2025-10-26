@@ -10,9 +10,7 @@ import jsonSchema from "fumadocs-mdx/plugins/json-schema";
 export const docs = defineDocs({
   dir: "content/docs",
 });
-export default defineConfig({
-  plugins: [jsonSchema()],
-});
+
 export const blogPosts = defineCollections({
   type: "doc",
   dir: "content/blog",
