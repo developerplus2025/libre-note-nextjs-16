@@ -127,7 +127,7 @@
     "fumadocs": "^0.0.0",
     "fumadocs-core": "^16.0.3",
     "fumadocs-docgen": "^1.3.6",
-    "fumadocs-mdx": "^11.6.10",
+    "fumadocs-mdx": "^13.0.1",
     "fumadocs-openapi": "^6.0.4",
     "fumadocs-twoslash": "^3.0.0",
     "fumadocs-ui": "^16.0.3",
