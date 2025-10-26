@@ -96,7 +96,7 @@ export default async function Page(props: {
   }
 
   const doc = page.data;
-  // @ts-expect-error - revisit fumadocs types.
+
   const MDX = doc.body;
   const neighbours = await findNeighbour(source.pageTree, page.url);
 
@@ -105,9 +105,8 @@ export default async function Page(props: {
 
   return (
     <DocsPage
-      // @ts-expect-error - revisit fumadocs types.
       toc={page.data.toc}
-      // @ts-expect-error - revisit fumadocs types.
+      // @ts-ignore
       full={page.data.full}
       breadcrumb={{ component: <DocsBreadcrumb tree={source.pageTree} /> }}
       tableOfContent={{
