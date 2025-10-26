@@ -9,10 +9,11 @@ export const blogPosts = defineCollections({
   dir: "content/blog",
   // add required frontmatter properties
   schema: frontmatterSchema.extend({
+    description: z.string().optional(),
     authors: z.array(
       z.object({
         name: z.string(),
-        avatar: z.string(), // có thể thêm .url() nếu luôn dùng link
+        avatar: z.string(),
         username: z.string(),
       }),
     ),
