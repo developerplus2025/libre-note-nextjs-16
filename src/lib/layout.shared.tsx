@@ -18,6 +18,19 @@ export const baseOptions: BaseLayoutProps = {
 };
 export const docsOptions = {
   ...baseOptions,
-
+  sidebar: {
+    tabs: [
+      {
+        title: "Docs",
+        description: "The docs for LibreNote",
+        url: "/docs/",
+      },
+      {
+        title: "API reference",
+        description: "The guide for developers",
+        url: "/docs/api-reference",
+      },
+    ],
+  },
   tree: source.pageTree,
 };
