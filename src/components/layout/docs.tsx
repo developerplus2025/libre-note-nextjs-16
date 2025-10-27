@@ -10,8 +10,10 @@ import { cva } from 'class-variance-authority';
 import { usePathname } from 'fumadocs-core/framework';
 import {
   Collapsible,
+  CollapsibleContent,
   CollapsibleTrigger,
 } from "../animate-ui/radix/collapsible";
+import { ScrollArea } from "../ui/scroll-area";
 
 export interface DocsLayoutProps {
   tree: PageTree.Root;
@@ -33,7 +35,7 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
       </header> */}
       <main
         id="nd-docs-layout"
-        className="flex flex-1 flex-row [--fd-nav-height:56px]"
+        className="flex flex-1 flex-row px-[4rem] [--fd-nav-height:56px]"
       >
         <Sidebar />
         {children}
@@ -42,14 +44,14 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
   );
 }
 
-function SearchToggle(props: ComponentProps<'button'>) {
+function SearchToggle(props: ComponentProps<"button">) {
   const { enabled, setOpenSearch } = useSearchContext();
   if (!enabled) return;
 
   return (
     <button
       {...props}
-      className={cn('text-sm', props.className)}
+      className={cn("text-sm", props.className)}
       onClick={() => setOpenSearch(true)}
     >
       Search
@@ -57,13 +59,13 @@ function SearchToggle(props: ComponentProps<'button'>) {
   );
 }
 
-function NavbarSidebarTrigger(props: ComponentProps<'button'>) {
+function NavbarSidebarTrigger(props: ComponentProps<"button">) {
   const { open, setOpen } = useSidebar();
 
   return (
     <button
       {...props}
-      className={cn('text-sm', props.className)}
+      className={cn("text-sm", props.className)}
       onClick={() => setOpen(!open)}
     >
       Sidebar
@@ -79,7 +81,7 @@ function Sidebar() {
     function renderItems(items: PageTree.Node[]) {
       return items.map((item) => (
         <SidebarItem key={item.$id} item={item}>
-          {item.type === 'folder' ? renderItems(item.children) : null}
+          {item.type === "folder" ? renderItems(item.children) : null}
         </SidebarItem>
       ));
     }
@@ -88,25 +90,27 @@ function Sidebar() {
   }, [root]);
 
   return (
-    <aside
-      className={cn(
-        'fixed flex flex-col shrink-0 p-4 top-14 z-20 text-sm overflow-auto md:sticky md:h-[calc(100dvh-56px)] md:w-[300px]',
-        'max-md:inset-x-0 max-md:bottom-0 max-md:bg-fd-background',
-        !open && 'max-md:invisible',
-      )}
-    >
-      {children}
-    </aside>
+    <ScrollArea className="md:h-[calc(100dvh-118px)]">
+      <aside
+        className={cn(
+          "fixed top-[5rem] z-20 flex shrink-0 flex-col overflow-auto p-4 text-sm md:sticky md:h-[calc(100dvh-118px)] md:w-[355px]",
+          "max-md:bg-fd-background max-md:inset-x-0 max-md:bottom-0",
+          !open && "max-md:invisible",
+        )}
+      >
+        {children}
+      </aside>
+    </ScrollArea>
   );
 }
 
 const linkVariants = cva(
-  'flex items-center gap-2 w-full py-1.5 rounded-lg text-fd-foreground/80 [&_svg]:size-4',
+  "flex items-center gap-2 w-full py-1.5 rounded-lg text-fd-foreground/80 [&_svg]:size-4",
   {
     variants: {
       active: {
-        true: 'text-fd-primary font-medium',
-        false: 'hover:text-fd-accent-foreground',
+        true: "text-fd-primary font-medium",
+        false: "hover:text-fd-accent-foreground",
       },
     },
   },
@@ -121,7 +125,7 @@ function SidebarItem({
 }) {
   const pathname = usePathname();
 
-  if (item.type === 'page') {
+  if (item.type === "page") {
     return (
       <Link
         href={item.url}
@@ -135,7 +139,7 @@ function SidebarItem({
     );
   }
 
-  if (item.type === 'separator') {
+  if (item.type === "separator") {
     return (
       <p className="text-fd-muted-foreground mt-6 mb-2 first:mt-0">
         {item.icon}
@@ -164,7 +168,9 @@ function SidebarItem({
           {item.name}
         </p>
       )}
-      <div className="flex flex-col border-l pl-4">{children}</div>
+      <CollapsibleContent>
+        <div className="flex flex-col border-l pl-4">{children}</div>
+      </CollapsibleContent>
     </Collapsible>
   );
 }
