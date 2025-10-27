@@ -27,7 +27,7 @@ export function DocsPage({ toc = [], ...props }: DocsPageProps) {
         </article>
       </main>
       {toc.length > 0 && (
-        <div className="sticky top-(--fd-nav-height) h-[calc(100dvh-var(--fd-nav-height))] w-[286px] shrink-0 overflow-auto p-4 max-xl:hidden">
+        <div className="sticky top-[6rem] h-[500px] w-[286px] shrink-0 overflow-auto p-4 max-xl:hidden">
           <p className="text-fd-muted-foreground mb-2 text-sm">On this page</p>
           <div className="flex flex-col">
             {toc.map((item) => (
