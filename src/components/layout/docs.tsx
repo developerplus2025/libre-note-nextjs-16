@@ -17,7 +17,7 @@ export interface DocsLayoutProps {
 export function DocsLayout({ tree, children }: DocsLayoutProps) {
   return (
     <TreeContextProvider tree={tree}>
-      <header className="sticky top-0 bg-fd-background h-14 z-20">
+      {/* <header className="sticky top-0 bg-fd-background h-14 z-20">
         <nav className="flex flex-row items-center gap-2 size-full px-4">
           <Link href="/" className="font-medium mr-auto">
             My Docs
@@ -26,7 +26,7 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
           <SearchToggle />
           <NavbarSidebarTrigger className="md:hidden" />
         </nav>
-      </header>
+      </header> */}
       <main
         id="nd-docs-layout"
         className="flex flex-1 flex-row [--fd-nav-height:56px]"

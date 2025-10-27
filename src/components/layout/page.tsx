@@ -10,6 +10,7 @@ import { cn } from '../../src/lib/cn';
 import { useTreeContext } from 'fumadocs-ui/contexts/tree';
 import { Link, usePathname } from 'fumadocs-core/framework';
 import type * as PageTree from 'fumadocs-core/page-tree';
+import ClerkTOCItems from "@/src/components/ui/toc-clerk";
 
 export interface DocsPageProps {
   toc?: TOCItemType[];
@@ -21,21 +22,12 @@ export function DocsPage({ toc = [], ...props }: DocsPageProps) {
   return (
     <AnchorProvider toc={toc}>
       <main className="flex w-full min-w-0 flex-col">
-        <article className="flex flex-1 flex-col w-full max-w-[860px] gap-6 px-4 py-8 md:px-6 md:mx-auto">
+        <article className="flex w-full max-w-[860px] flex-1 flex-col gap-6 px-4 py-8 md:mx-auto md:px-6">
           {props.children}
           <Footer />
         </article>
       </main>
-      {toc.length > 0 && (
-        <div className="sticky top-(--fd-nav-height) w-[286px] shrink-0 h-[calc(100dvh-var(--fd-nav-height))] p-4 overflow-auto max-xl:hidden">
-          <p className="text-sm text-fd-muted-foreground mb-2">On this page</p>
-          <div className="flex flex-col">
-            {toc.map((item) => (
-              <TocItem key={item.url} item={item} />
-            ))}
-          </div>
-        </div>
-      )}
+      <ClerkTOCItems />
     </AnchorProvider>
   );
 }
