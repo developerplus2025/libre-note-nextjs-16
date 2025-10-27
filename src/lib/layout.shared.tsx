@@ -1,6 +1,5 @@
-
-import type { BaseLayoutProps } from "@/components/layout/shared";
 import { source } from "@/lib/source";
+import { BaseLayoutProps } from "fumadocs-ui/layouts/links";
 /**
  * Shared layout configurations
  *
