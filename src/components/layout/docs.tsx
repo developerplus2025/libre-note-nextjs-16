@@ -8,6 +8,10 @@ import { useSearchContext } from 'fumadocs-ui/contexts/search';
 import { useSidebar } from 'fumadocs-ui/contexts/sidebar';
 import { cva } from 'class-variance-authority';
 import { usePathname } from 'fumadocs-core/framework';
+import {
+  Collapsible,
+  CollapsibleTrigger,
+} from "../animate-ui/radix/collapsible";
 
 export interface DocsLayoutProps {
   tree: PageTree.Root;
@@ -141,24 +145,26 @@ function SidebarItem({
   }
 
   return (
-    <div>
+    <Collapsible>
       {item.index ? (
-        <Link
-          className={linkVariants({
-            active: pathname === item.index.url,
-          })}
-          href={item.index.url}
-        >
-          {item.index.icon}
-          {item.index.name}
-        </Link>
+        <CollapsibleTrigger>
+          <Link
+            className={linkVariants({
+              active: pathname === item.index.url,
+            })}
+            href={item.index.url}
+          >
+            {item.index.icon}
+            {item.index.name}
+          </Link>
+        </CollapsibleTrigger>
       ) : (
-        <p className={cn(linkVariants(), 'text-start')}>
+        <p className={cn(linkVariants(), "text-start")}>
           {item.icon}
           {item.name}
         </p>
       )}
-      <div className="pl-4 border-l flex flex-col">{children}</div>
-    </div>
+      <div className="flex flex-col border-l pl-4">{children}</div>
+    </Collapsible>
   );
 }
