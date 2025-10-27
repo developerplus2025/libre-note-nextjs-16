@@ -149,30 +149,30 @@ function SidebarItem({
   }
 
   return (
-    <Collapsible>
+    <div>
       {item.index ? (
-        <CollapsibleTrigger>
-          <Link
-            className={linkVariants({
-              active: pathname === item.index.url,
-            })}
-            href={item.index.url}
-          >
-            {item.index.icon}
-            {item.index.name}
-          </Link>
-        </CollapsibleTrigger>
+        // <CollapsibleTrigger>
+        <Link
+          className={linkVariants({
+            active: pathname === item.index.url,
+          })}
+          href={item.index.url}
+        >
+          {item.index.icon}
+          {item.index.name}
+        </Link>
       ) : (
-        <CollapsibleTrigger>
-          <p className={cn(linkVariants(), "text-start")}>
-            {item.icon}
-            {item.name}
-          </p>
-        </CollapsibleTrigger>
+        // </CollapsibleTrigger>
+        // <CollapsibleTrigger>
+        <p className={cn(linkVariants(), "text-start")}>
+          {item.icon}
+          {item.name}
+        </p>
+        // </CollapsibleTrigger>
       )}
-      <CollapsibleContent>
-        <div className="flex flex-col border-l pl-4">{children}</div>
-      </CollapsibleContent>
-    </Collapsible>
+      {/* <CollapsibleContent> */}
+      <div className="flex flex-col border-l pl-4">{children}</div>
+      {/* </CollapsibleContent> */}
+    </div>
   );
 }
