@@ -1,5 +1,5 @@
 'use client';
-import type { TOCItemType } from 'fumadocs-core/server';
+
 import * as Primitive from 'fumadocs-core/toc';
 import { type ComponentProps, useEffect, useRef, useState } from 'react';
 import { cn } from '../../lib/cn';
@@ -131,7 +131,7 @@ function TOCItem({
   upper = item.depth,
   lower = item.depth,
 }: {
-  item: TOCItemType;
+  item: Primitive.TOCItemType;
   upper?: number;
   lower?: number;
 }) {
@@ -145,13 +145,13 @@ function TOCItem({
       style={{
         paddingInlineStart: getItemOffset(item.depth),
       }}
-      className="prose relative py-1.5 text-sm text-fd-muted-foreground hover:text-fd-accent-foreground transition-colors [overflow-wrap:anywhere] first:pt-0 last:pb-0 data-[active=true]:text-fd-primary"
+      className="prose text-fd-muted-foreground hover:text-fd-accent-foreground data-[active=true]:text-fd-primary relative py-1.5 text-sm [overflow-wrap:anywhere] transition-colors first:pt-0 last:pb-0"
     >
       {offset !== upperOffset ? (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 16 16"
-          className="absolute -top-1.5 start-0 size-4 rtl:-scale-x-100"
+          className="absolute start-0 -top-1.5 size-4 rtl:-scale-x-100"
         >
           <line
             x1={upperOffset}
@@ -165,9 +165,9 @@ function TOCItem({
       ) : null}
       <div
         className={cn(
-          'absolute inset-y-0 w-px bg-fd-foreground/10',
-          offset !== upperOffset && 'top-1.5',
-          offset !== lowerOffset && 'bottom-1.5',
+          "bg-fd-foreground/10 absolute inset-y-0 w-px",
+          offset !== upperOffset && "top-1.5",
+          offset !== lowerOffset && "bottom-1.5",
         )}
         style={{
           insetInlineStart: offset,

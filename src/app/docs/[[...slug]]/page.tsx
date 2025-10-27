@@ -6,7 +6,7 @@ import {
   IconArrowRight,
   IconArrowUpRight,
 } from "@tabler/icons-react";
-import { findNeighbour } from "fumadocs-core/server";
+
 import { Suspense } from "react";
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import { source } from "@/lib/source";
@@ -28,6 +28,7 @@ import PathAnimation from "../components/path-animation";
 import { Loader } from "@/components/ui/loader";
 import { DocsBody, DocsDescription, DocsPage } from "@/components/layout/page";
 import DownloadUser from "@/components/download-user";
+import { findNeighbour } from "fumadocs-core/page-tree";
 export const revalidate = false;
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -95,7 +96,7 @@ export default async function Page(props: {
   }
 
   const doc = page.data;
-  // @ts-expect-error - revisit fumadocs types.
+
   const MDX = doc.body;
   const neighbours = await findNeighbour(source.pageTree, page.url);
 
@@ -104,9 +105,8 @@ export default async function Page(props: {
 
   return (
     <DocsPage
-      // @ts-expect-error - revisit fumadocs types.
       toc={page.data.toc}
-      // @ts-expect-error - revisit fumadocs types.
+      // @ts-ignore
       full={page.data.full}
       breadcrumb={{ component: <DocsBreadcrumb tree={source.pageTree} /> }}
       tableOfContent={{
