@@ -1,7 +1,7 @@
 'use client';
 
 import { ChevronDown } from 'lucide-react';
-import type { TOCItemType } from 'fumadocs-core/server';
+
 import {
   Collapsible,
   CollapsibleContent,
@@ -9,6 +9,7 @@ import {
 } from './ui/collapsible';
 import { ComponentProps } from 'react';
 import { cn } from '../lib/cn';
+import { TOCItemType } from "fumadocs-core/toc";
 
 export interface InlineTocProps extends ComponentProps<typeof Collapsible> {
   items: TOCItemType[];
