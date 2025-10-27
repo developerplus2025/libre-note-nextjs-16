@@ -90,17 +90,15 @@ function Sidebar() {
   }, [root]);
 
   return (
-    <ScrollArea className="md:h-[calc(100dvh-118px)]">
-      <aside
-        className={cn(
-          "fixed top-[5rem] z-20 flex shrink-0 flex-col overflow-auto p-4 text-sm md:sticky md:h-[calc(100dvh-118px)] md:w-[290px]",
-          "max-md:bg-fd-background max-md:inset-x-0 max-md:bottom-0",
-          !open && "max-md:invisible",
-        )}
-      >
-        {children}
-      </aside>
-    </ScrollArea>
+    <aside
+      className={cn(
+        "fixed top-[5rem] z-20 flex shrink-0 flex-col overflow-auto p-4 text-sm md:sticky md:h-[calc(100dvh-118px)] md:w-[290px]",
+        "max-md:bg-fd-background max-md:inset-x-0 max-md:bottom-0",
+        !open && "max-md:invisible",
+      )}
+    >
+      <ScrollArea className="md:h-[calc(100dvh-118px)]">{children}</ScrollArea>
+    </aside>
   );
 }
 
