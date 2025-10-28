@@ -178,19 +178,19 @@ function SearchToggle(props: ComponentProps<"button">) {
   );
 }
 
-function NavbarSidebarTrigger(props: ComponentProps<"button">) {
-  const { open, setOpen } = useSidebar();
+// function NavbarSidebarTrigger(props: ComponentProps<"button">) {
+//   const { open, setOpen } = useSidebar();
 
-  return (
-    <button
-      {...props}
-      className={cn("text-sm", props.className)}
-      onClick={() => setOpen(!open)}
-    >
-      Sidebar
-    </button>
-  );
-}
+//   return (
+//     <button
+//       {...props}
+//       className={cn("text-sm", props.className)}
+//       onClick={() => setOpen(!open)}
+//     >
+//       Sidebar
+//     </button>
+//   );
+// }
 export function PageTOC(props: ComponentProps<"div">) {
   return (
     <div
