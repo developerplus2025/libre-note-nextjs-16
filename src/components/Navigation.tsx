@@ -88,7 +88,7 @@ export default function Navigation({ className }: NavigationProps): React.ReactE
     >
       <nav className="relative z-4 shrink-0 items-center justify-center min-[300px]:hidden sm:hidden md:hidden lg:flex xl:flex">
         <nav
-          className={`${pathname.startsWith("/docs") ? "border-none" : "border-b"} ${isDocsPath || isCreative || isGeneration ? "border-b bg-[#0c0c0c]" : "border-b"} relative z-1 flex w-full items-center justify-between gap-8 bg-white px-8 dark:border-[#1d1d1d] dark:bg-[#000000]`}
+          className={`${pathname.startsWith("/docs") ? "border-b" : "border-b"} ${isDocsPath || isCreative || isGeneration ? "border-b bg-[#0c0c0c]" : "border-b"} relative z-1 flex w-full items-center justify-between gap-8 bg-white px-8 dark:border-[#1d1d1d] dark:bg-[#000000]`}
         >
           <div className="flex h-[58px] w-fit items-center gap-4 text-sm [&_li]:!list-none">
             <div className="flex items-center gap-4">
