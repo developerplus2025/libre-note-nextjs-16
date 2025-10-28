@@ -26,7 +26,12 @@ import { DocsBreadcrumb } from "@/components/docs-breadcrumb";
 import AudioBar from "../components/audio-bar";
 import PathAnimation from "../components/path-animation";
 import { Loader } from "@/components/ui/loader";
-import { DocsBody, DocsDescription, DocsPage } from "@/components/layout/page";
+import {
+  DocsBody,
+  DocsDescription,
+  DocsPage,
+  DocsTitle,
+} from "fumadocs-ui/page";
 import DownloadUser from "@/components/download-user";
 import { findNeighbour } from "fumadocs-core/page-tree";
 export const revalidate = false;
