@@ -13,7 +13,7 @@ import Providers from "@/components/ProgressBarProvider";
 import Footer from "@/components/footer";
 import { Toaster } from "@/components/ui/sonner";
 import CookieAlert from "@/components/cookie-alert";
-import { RootProvider } from "fumadocs-ui/provider";
+import { RootProvider } from "fumadocs-ui/provider/next";
 import FrameVideo from "./(home)/components/frame-video";
 import { Analytics } from "@vercel/analytics/react";
 import NavigationMobile from "@/components/Navigation-Mobile";

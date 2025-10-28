@@ -23,7 +23,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
-import { useSearchContext } from "fumadocs-ui/provider";
+import { useSearchContext } from "fumadocs-ui/provider/next";
 import Image from "next/image";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import X from "@/components/x";

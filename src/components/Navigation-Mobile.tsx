@@ -3,7 +3,7 @@
 import type { Variants } from "motion/react";
 import * as motion from "motion/react-client";
 import Link from "next/link";
-import { useSearchContext } from "fumadocs-ui/provider";
+import { useSearchContext } from "fumadocs-ui/provider/next";
 import { useEffect, useRef, useState } from "react";
 import NavigationIcon from "./comp-100";
 import { MobileNav } from "./mobile-nav";
