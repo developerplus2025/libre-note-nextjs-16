@@ -1,6 +1,13 @@
 "use client";
 
-import { type ComponentProps, type ReactNode, useMemo } from "react";
+import {
+  type ComponentProps,
+  type ReactNode,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   AnchorProvider,
   type TOCItemType,
@@ -11,6 +18,10 @@ import { useTreeContext } from "fumadocs-ui/contexts/tree";
 import { Link, usePathname } from "fumadocs-core/framework";
 import type * as PageTree from "fumadocs-core/page-tree";
 import * as Primitive from "fumadocs-core/toc";
+import { useTOCItems } from "@/src/components/ui/toc";
+import { useI18n } from "fumadocs-ui/contexts/i18n";
+import { TocThumb } from "@/src/components/ui/toc-thumb";
+import { mergeRefs } from "@/lib/merge-refs";
 export interface DocsPageProps {
   toc?: TOCItemType[];
 
@@ -18,6 +29,69 @@ export interface DocsPageProps {
 }
 
 export function DocsPage({ toc = [], ...props }: DocsPageProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const items = useTOCItems();
+  const { text } = useI18n();
+
+  const [svg, setSvg] = useState<{
+    path: string;
+    width: number;
+    height: number;
+  }>();
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const container = containerRef.current;
+
+    function onResize(): void {
+      if (container.clientHeight === 0) return;
+      let w = 0,
+        h = 0;
+      const d: string[] = [];
+      for (let i = 0; i < items.length; i++) {
+        const element: HTMLElement | null = container.querySelector(
+          `a[href="#${items[i].url.slice(1)}"]`,
+        );
+        if (!element) continue;
+
+        const styles = getComputedStyle(element);
+        const offset = getLineOffset(items[i].depth) + 1,
+          top = element.offsetTop + parseFloat(styles.paddingTop),
+          bottom =
+            element.offsetTop +
+            element.clientHeight -
+            parseFloat(styles.paddingBottom);
+
+        w = Math.max(offset, w);
+        h = Math.max(h, bottom);
+
+        d.push(`${i === 0 ? "M" : "L"}${offset} ${top}`);
+        d.push(`L${offset} ${bottom}`);
+      }
+
+      setSvg({
+        path: d.join(" "),
+        width: w + 1,
+        height: h,
+      });
+    }
+
+    const observer = new ResizeObserver(onResize);
+    onResize();
+
+    observer.observe(container);
+    return () => {
+      observer.disconnect();
+    };
+  }, [items]);
+
+  if (items.length === 0)
+    return (
+      <div className="bg-fd-card text-fd-muted-foreground rounded-lg border p-3 text-xs">
+        {text.tocNoHeadings}
+      </div>
+    );
+
   return (
     <AnchorProvider toc={toc}>
       <main className="flex w-full min-w-0 flex-col">
@@ -36,6 +110,40 @@ export function DocsPage({ toc = [], ...props }: DocsPageProps) {
           </div>
         </div>
       )}
+      {svg ? (
+        <div
+          className="absolute start-0 top-0 rtl:-scale-x-100"
+          style={{
+            width: svg.width,
+            height: svg.height,
+            maskImage: `url("data:image/svg+xml,${
+              // Inline SVG
+              encodeURIComponent(
+                `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${svg.width} ${svg.height}"><path d="${svg.path}" stroke="black" stroke-width="1" fill="none" /></svg>`,
+              )
+            }")`,
+          }}
+        >
+          <TocThumb
+            containerRef={containerRef}
+            className="bg-fd-primary mt-(--fd-top) h-(--fd-height) transition-all"
+          />
+        </div>
+      ) : null}
+      <div
+        ref={mergeRefs(containerRef)}
+        className={cn("flex flex-col")}
+        {...props}
+      >
+        {items.map((item, i) => (
+          <TOCItem
+            key={item.url}
+            item={item}
+            upper={items[i - 1]?.depth}
+            lower={items[i + 1]?.depth}
+          />
+        ))}
+      </div>
     </AnchorProvider>
   );
 }
