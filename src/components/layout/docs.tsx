@@ -191,7 +191,24 @@ function NavbarSidebarTrigger(props: ComponentProps<"button">) {
     </button>
   );
 }
-
+export function PageTOC(props: ComponentProps<"div">) {
+  return (
+    <div
+      id="nd-toc"
+      {...props}
+      className={cn("sticky pt-12 pb-2 max-xl:hidden", props.className)}
+      style={{
+        ...props.style,
+        top: "calc(var(--fd-banner-height) + var(--fd-nav-height))",
+        height: "calc(100dvh - var(--fd-banner-height) - var(--fd-nav-height))",
+      }}
+    >
+      <div className="flex h-full w-(--fd-toc-width) max-w-full flex-col pe-4">
+        {props.children}
+      </div>
+    </div>
+  );
+}
 function Sidebar() {
   const { root } = useTreeContext();
   const { open } = useSidebar();

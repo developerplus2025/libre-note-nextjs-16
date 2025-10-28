@@ -10,7 +10,12 @@ import { cn } from '../../src/lib/cn';
 import { useTreeContext } from 'fumadocs-ui/contexts/tree';
 import { Link, usePathname } from 'fumadocs-core/framework';
 import type * as PageTree from "fumadocs-core/page-tree";
+import * as Primitive from "fumadocs-core/toc";
+import { TocThumb } from "../../../src/src/components/ui/toc-thumb";
 
+import { useTOCItems } from "../../../src/src/components/ui/toc";
+import { mergeRefs } from "../../lib/merge-refs";
+import { useI18n } from "fumadocs-ui/contexts/i18n";
 export interface DocsPageProps {
   toc?: TOCItemType[];
 
@@ -31,7 +36,7 @@ export function DocsPage({ toc = [], ...props }: DocsPageProps) {
           <p className="text-fd-muted-foreground mb-2 text-sm">On this page</p>
           <div className="flex flex-col">
             {toc.map((item) => (
-              <TocItem key={item.url} item={item} />
+              <TOCItem key={item.url} item={item} />
             ))}
           </div>
         </div>
@@ -40,54 +45,97 @@ export function DocsPage({ toc = [], ...props }: DocsPageProps) {
   );
 }
 
-export function DocsBody(props: ComponentProps<'div'>) {
+export function DocsBody(props: ComponentProps<"div">) {
   return (
-    <div {...props} className={cn('prose', props.className)}>
+    <div {...props} className={cn("prose", props.className)}>
       {props.children}
     </div>
   );
 }
 
-export function DocsDescription(props: ComponentProps<'p'>) {
+export function DocsDescription(props: ComponentProps<"p">) {
   // don't render if no description provided
   if (props.children === undefined) return null;
 
   return (
     <p
       {...props}
-      className={cn('mb-8 text-lg text-fd-muted-foreground', props.className)}
+      className={cn("text-fd-muted-foreground mb-8 text-lg", props.className)}
     >
       {props.children}
     </p>
   );
 }
 
-export function DocsTitle(props: ComponentProps<'h1'>) {
+export function DocsTitle(props: ComponentProps<"h1">) {
   return (
-    <h1 {...props} className={cn('text-3xl font-semibold', props.className)}>
+    <h1 {...props} className={cn("text-3xl font-semibold", props.className)}>
       {props.children}
     </h1>
   );
 }
+function getItemOffset(depth: number): number {
+  if (depth <= 2) return 14;
+  if (depth === 3) return 26;
+  return 36;
+}
 
-function TocItem({ item }: { item: TOCItemType }) {
-  const isActive = useActiveAnchors().includes(item.url.slice(1));
+function getLineOffset(depth: number): number {
+  return depth >= 3 ? 10 : 0;
+}
+
+function TOCItem({
+  item,
+  upper = item.depth,
+  lower = item.depth,
+}: {
+  item: Primitive.TOCItemType;
+  upper?: number;
+  lower?: number;
+}) {
+  const offset = getLineOffset(item.depth),
+    upperOffset = getLineOffset(upper),
+    lowerOffset = getLineOffset(lower);
 
   return (
-    <a
+    <Primitive.TOCItem
       href={item.url}
-      className={cn(
-        'text-sm text-fd-foreground/80 py-1',
-        isActive && 'text-fd-primary',
-      )}
       style={{
-        paddingLeft: Math.max(0, item.depth - 2) * 16,
+        paddingInlineStart: getItemOffset(item.depth),
       }}
+      className="prose text-fd-muted-foreground hover:text-fd-accent-foreground data-[active=true]:text-fd-primary relative py-1.5 text-sm [overflow-wrap:anywhere] transition-colors first:pt-0 last:pb-0"
     >
+      {offset !== upperOffset ? (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 16 16"
+          className="absolute start-0 -top-1.5 size-4 rtl:-scale-x-100"
+        >
+          <line
+            x1={upperOffset}
+            y1="0"
+            x2={offset}
+            y2="12"
+            className="stroke-fd-foreground/10"
+            strokeWidth="1"
+          />
+        </svg>
+      ) : null}
+      <div
+        className={cn(
+          "bg-fd-foreground/10 absolute inset-y-0 w-px",
+          offset !== upperOffset && "top-1.5",
+          offset !== lowerOffset && "bottom-1.5",
+        )}
+        style={{
+          insetInlineStart: offset,
+        }}
+      />
       {item.title}
-    </a>
+    </Primitive.TOCItem>
   );
 }
+
 
 function Footer() {
   const { root } = useTreeContext();

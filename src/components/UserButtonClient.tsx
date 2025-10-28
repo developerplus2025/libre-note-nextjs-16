@@ -27,10 +27,11 @@ import FeedBack from "./feedback";
 import GitHub from "./GitHub";
 import X from "./x";
 import { Loader } from "./ui/loader";
-import { useSearchContext } from "fumadocs-ui/provider/next";
+
 import Image from "next/image";
 import ThemeToggleButton from "./ui/theme-toggle-button";
 import { SearchUi } from "./search-ui";
+import { useSearchContext } from "fumadocs-ui/contexts/search";
 function removeVietnameseTones(str?: string): string {
   if (!str) return "";
   return str
