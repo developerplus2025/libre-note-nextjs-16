@@ -18,10 +18,12 @@ import { useTreeContext } from "fumadocs-ui/contexts/tree";
 import { Link, usePathname } from "fumadocs-core/framework";
 import type * as PageTree from "fumadocs-core/page-tree";
 import * as Primitive from "fumadocs-core/toc";
-import { useTOCItems } from "@/src/components/ui/toc";
-import { useI18n } from "fumadocs-ui/contexts/i18n";
+import { TOCItems, TOCScrollArea, useTOCItems } from "@/src/components/ui/toc";
+import { I18nLabel, useI18n } from "fumadocs-ui/contexts/i18n";
 import { TocThumb } from "@/src/components/ui/toc-thumb";
 import { mergeRefs } from "@/lib/merge-refs";
+import { Text } from "lucide-react";
+import ClerkTOCItems from "@/src/components/ui/toc-clerk";
 export interface DocsPageProps {
   toc?: TOCItemType[];
 
@@ -237,6 +239,31 @@ function TOCItem({
       />
       {item.title}
     </Primitive.TOCItem>
+  );
+}
+export function PageTOCTitle(props: ComponentProps<"h2">) {
+  return (
+    <h3
+      id="toc-title"
+      {...props}
+      className={cn(
+        "text-fd-muted-foreground inline-flex items-center gap-1.5 text-sm",
+        props.className,
+      )}
+    >
+      <Text className="size-4" />
+      <I18nLabel label="toc" />
+    </h3>
+  );
+}
+export function PageTOCItems({
+  variant = "normal",
+  ...props
+}: ComponentProps<"div"> & { variant?: "clerk" | "normal" }) {
+  return (
+    <TOCScrollArea {...props}>
+      {variant === "clerk" ? <ClerkTOCItems /> : <TOCItems />}
+    </TOCScrollArea>
   );
 }
 
