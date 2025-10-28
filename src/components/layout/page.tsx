@@ -11,11 +11,14 @@ import { useTreeContext } from 'fumadocs-ui/contexts/tree';
 import { Link, usePathname } from 'fumadocs-core/framework';
 import type * as PageTree from "fumadocs-core/page-tree";
 import * as Primitive from "fumadocs-core/toc";
+<<<<<<< HEAD
 import { TocThumb } from "../../../src/src/components/ui/toc-thumb";
 
 import { useTOCItems } from "../../../src/src/components/ui/toc";
 import { mergeRefs } from "../../lib/merge-refs";
 import { useI18n } from "fumadocs-ui/contexts/i18n";
+=======
+>>>>>>> docs-fixed-v2
 export interface DocsPageProps {
   toc?: TOCItemType[];
 
@@ -80,6 +83,15 @@ function getItemOffset(depth: number): number {
   return 36;
 }
 
+<<<<<<< HEAD
+=======
+function getItemOffset(depth: number): number {
+  if (depth <= 2) return 14;
+  if (depth === 3) return 26;
+  return 36;
+}
+
+>>>>>>> docs-fixed-v2
 function getLineOffset(depth: number): number {
   return depth >= 3 ? 10 : 0;
 }

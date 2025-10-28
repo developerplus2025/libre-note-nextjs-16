@@ -1,13 +1,13 @@
-'use client';
-import type * as PageTree from 'fumadocs-core/page-tree';
-import { type ComponentProps, type ReactNode, useMemo } from 'react';
-import { cn } from '../../src/lib/cn';
-import { TreeContextProvider, useTreeContext } from 'fumadocs-ui/contexts/tree';
-import Link from 'fumadocs-core/link';
-import { useSearchContext } from 'fumadocs-ui/contexts/search';
-import { useSidebar } from 'fumadocs-ui/contexts/sidebar';
-import { cva } from 'class-variance-authority';
-import { usePathname } from 'fumadocs-core/framework';
+"use client";
+import type * as PageTree from "fumadocs-core/page-tree";
+import { type ComponentProps, type ReactNode, useMemo } from "react";
+import { cn } from "../../src/lib/cn";
+import { TreeContextProvider, useTreeContext } from "fumadocs-ui/contexts/tree";
+import Link from "fumadocs-core/link";
+import { useSearchContext } from "fumadocs-ui/contexts/search";
+import { useSidebar } from "fumadocs-ui/contexts/sidebar";
+import { cva } from "class-variance-authority";
+import { usePathname } from "fumadocs-core/framework";
 import {
   Collapsible,
   CollapsibleContent,
@@ -16,7 +16,12 @@ import {
 import { ScrollArea } from "../ui/scroll-area";
 import { VersionSwitcher } from "../version-switcher";
 import { ModeGuidedSwitcher } from "../mode-guided-switcher";
+<<<<<<< HEAD
 
+=======
+import { SidebarProvider } from "../ui/sidebar";
+import * as Primitive from "fumadocs-core/toc";
+>>>>>>> docs-fixed-v2
 export interface DocsLayoutProps {
   tree: PageTree.Root;
   children: ReactNode;
@@ -178,19 +183,19 @@ function SearchToggle(props: ComponentProps<"button">) {
   );
 }
 
-function NavbarSidebarTrigger(props: ComponentProps<"button">) {
-  const { open, setOpen } = useSidebar();
+// function NavbarSidebarTrigger(props: ComponentProps<"button">) {
+//   const { open, setOpen } = useSidebar();
 
-  return (
-    <button
-      {...props}
-      className={cn("text-sm", props.className)}
-      onClick={() => setOpen(!open)}
-    >
-      Sidebar
-    </button>
-  );
-}
+//   return (
+//     <button
+//       {...props}
+//       className={cn("text-sm", props.className)}
+//       onClick={() => setOpen(!open)}
+//     >
+//       Sidebar
+//     </button>
+//   );
+// }
 export function PageTOC(props: ComponentProps<"div">) {
   return (
     <div
@@ -209,6 +214,27 @@ export function PageTOC(props: ComponentProps<"div">) {
     </div>
   );
 }
+<<<<<<< HEAD
+export function PageTOC(props: ComponentProps<"div">) {
+  return (
+    <div
+      id="nd-toc"
+      {...props}
+      className={cn("sticky pt-12 pb-2 max-xl:hidden", props.className)}
+      style={{
+        ...props.style,
+        top: "calc(var(--fd-banner-height) + var(--fd-nav-height))",
+        height: "calc(100dvh - var(--fd-banner-height) - var(--fd-nav-height))",
+      }}
+    >
+      <div className="flex h-full w-(--fd-toc-width) max-w-full flex-col pe-4">
+        {props.children}
+      </div>
+    </div>
+  );
+}
+=======
+>>>>>>> docs-fixed-v2
 function Sidebar() {
   const { root } = useTreeContext();
   const { open } = useSidebar();
@@ -228,20 +254,93 @@ function Sidebar() {
   return (
     <aside
       className={cn(
+<<<<<<< HEAD
         "fixed top-[5rem] z-20 flex shrink-0 flex-col overflow-auto p-4 text-sm md:sticky md:h-[calc(100dvh-150px)] md:w-[290px]",
+=======
+        "fixed top-[5rem] z-20 flex shrink-0 flex-col items-center gap-[2rem] overflow-auto p-4 text-sm md:sticky md:h-[calc(100dvh-120px)] md:w-[290px]",
+>>>>>>> docs-fixed-v2
         "max-md:bg-fd-background max-md:inset-x-0 max-md:bottom-0",
         !open && "max-md:invisible",
       )}
     >
+<<<<<<< HEAD
       <div>
+=======
+      <SidebarProvider className="flex min-h-[100px] flex-col gap-[1rem]">
+>>>>>>> docs-fixed-v2
         <ModeGuidedSwitcher
           ModeGuided={data.mode}
           defaultModeGuided={data.mode.docs.name}
         />
         <VersionSwitcher VersionGuided={version} defaultModeGuided={1} />
+<<<<<<< HEAD
       </div>
+=======
+      </SidebarProvider>
+>>>>>>> docs-fixed-v2
       <ScrollArea className="md:h-[calc(100dvh-118px)]">{children}</ScrollArea>
     </aside>
+  );
+}
+function getItemOffset(depth: number): number {
+  if (depth <= 2) return 14;
+  if (depth === 3) return 26;
+  return 36;
+}
+
+function getLineOffset(depth: number): number {
+  return depth >= 3 ? 10 : 0;
+}
+
+function TOCItem({
+  item,
+  upper = item.depth,
+  lower = item.depth,
+}: {
+  item: Primitive.TOCItemType;
+  upper?: number;
+  lower?: number;
+}) {
+  const offset = getLineOffset(item.depth),
+    upperOffset = getLineOffset(upper),
+    lowerOffset = getLineOffset(lower);
+
+  return (
+    <Primitive.TOCItem
+      href={item.url}
+      style={{
+        paddingInlineStart: getItemOffset(item.depth),
+      }}
+      className="prose text-fd-muted-foreground hover:text-fd-accent-foreground data-[active=true]:text-fd-primary relative py-1.5 text-sm [overflow-wrap:anywhere] transition-colors first:pt-0 last:pb-0"
+    >
+      {offset !== upperOffset ? (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 16 16"
+          className="absolute start-0 -top-1.5 size-4 rtl:-scale-x-100"
+        >
+          <line
+            x1={upperOffset}
+            y1="0"
+            x2={offset}
+            y2="12"
+            className="stroke-fd-foreground/10"
+            strokeWidth="1"
+          />
+        </svg>
+      ) : null}
+      <div
+        className={cn(
+          "bg-fd-foreground/10 absolute inset-y-0 w-px",
+          offset !== upperOffset && "top-1.5",
+          offset !== lowerOffset && "bottom-1.5",
+        )}
+        style={{
+          insetInlineStart: offset,
+        }}
+      />
+      {item.title}
+    </Primitive.TOCItem>
   );
 }
 
@@ -303,17 +402,16 @@ function SidebarItem({
           {item.index.name}
         </Link>
       ) : (
-        // </CollapsibleTrigger>
+        //  </CollapsibleTrigger>
         // <CollapsibleTrigger>
         <p className={cn(linkVariants(), "text-start")}>
           {item.icon}
           {item.name}
         </p>
-        // </CollapsibleTrigger>
       )}
-      {/* <CollapsibleContent> */}
+      {/* <CollapsibleContent > */}
       <div className="flex flex-col border-l pl-4">{children}</div>
-      {/* </CollapsibleContent> */}
+      {/* </CollapsibleContent>  */}
     </div>
   );
 }

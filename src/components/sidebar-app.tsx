@@ -14,12 +14,11 @@ import {
 	SidebarRail,
 } from "@/components/ui/sidebar";
 import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { NavUser } from "@/components/nav-user";
 import { MessageCircle, SquarePen } from "lucide-react";
 import type { ComponentProps } from "react";
 
@@ -87,98 +86,96 @@ const data = {
 
 export function SidebarApp({ ...props }: ComponentProps<typeof Sidebar>) {
 	return (
-		<Sidebar className="border-r-0 pt-0" {...props}>
-			<SidebarHeader>
-				<div className="flex items-center justify-between p-2">
-					<div className="flex items-center gap-3">
-						<div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-							<MessageCircle className="h-5 w-5 text-primary-foreground" />
-						</div>
-						<span className="text-lg font-semibold">VF R1 AI</span>
-					</div>
-					{/* New Chat Button */}
-					<TooltipProvider>
-						<Tooltip>
-							<TooltipTrigger asChild>
-								<Button size="icon" variant="ghost">
-									<SquarePen className="h-5 w-5" />
-									<span className="sr-only">New Chat</span>
-								</Button>
-							</TooltipTrigger>
-							<TooltipContent>
-								<p>New Chat</p>
-							</TooltipContent>
-						</Tooltip>
-					</TooltipProvider>
-				</div>
-			</SidebarHeader>
-			<SidebarContent>
-				<div className="flex flex-col gap-4">
-					{/* Recent Chats */}
-					<SidebarGroup>
-						<SidebarGroupLabel>Recent</SidebarGroupLabel>
-						<SidebarMenu>
-							{data.recentChats.map((chat) => (
-								<SidebarMenuItem key={chat.title}>
-									<SidebarMenuButton className="w-full justify-start">
-										<MessageCircle className="mr-2 h-4 w-4" />
-										{chat.title}
-									</SidebarMenuButton>
-								</SidebarMenuItem>
-							))}
-						</SidebarMenu>
-					</SidebarGroup>
+    <Sidebar className="border-r-0 pt-0" {...props}>
+      <SidebarHeader>
+        <div className="flex items-center justify-between p-2">
+          <div className="flex items-center gap-3">
+            <div className="bg-primary flex h-8 w-8 items-center justify-center rounded-lg">
+              <MessageCircle className="text-primary-foreground h-5 w-5" />
+            </div>
+            <span className="text-lg font-semibold">VF R1 AI</span>
+          </div>
+          {/* New Chat Button */}
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button size="icon" variant="ghost">
+                  <SquarePen className="h-5 w-5" />
+                  <span className="sr-only">New Chat</span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>New Chat</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+      </SidebarHeader>
+      <SidebarContent>
+        <div className="flex flex-col gap-4">
+          {/* Recent Chats */}
+          <SidebarGroup>
+            <SidebarGroupLabel>Recent</SidebarGroupLabel>
+            <SidebarMenu>
+              {data.recentChats.map((chat) => (
+                <SidebarMenuItem key={chat.title}>
+                  <SidebarMenuButton className="w-full justify-start">
+                    <MessageCircle className="mr-2 h-4 w-4" />
+                    {chat.title}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroup>
 
-					{/* Previous 7 Days */}
-					<SidebarGroup>
-						<SidebarGroupLabel>Previous 7 Days</SidebarGroupLabel>
-						<SidebarMenu>
-							{data.lastWeekChats.map((chat) => (
-								<SidebarMenuItem key={chat.title}>
-									<SidebarMenuButton className="w-full justify-start">
-										<MessageCircle className="mr-2 h-4 w-4" />
-										{chat.title}
-									</SidebarMenuButton>
-								</SidebarMenuItem>
-							))}
-						</SidebarMenu>
-					</SidebarGroup>
+          {/* Previous 7 Days */}
+          <SidebarGroup>
+            <SidebarGroupLabel>Previous 7 Days</SidebarGroupLabel>
+            <SidebarMenu>
+              {data.lastWeekChats.map((chat) => (
+                <SidebarMenuItem key={chat.title}>
+                  <SidebarMenuButton className="w-full justify-start">
+                    <MessageCircle className="mr-2 h-4 w-4" />
+                    {chat.title}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroup>
 
-					{/* Previous 30 Days */}
-					<SidebarGroup>
-						<SidebarGroupLabel>Previous 30 Days</SidebarGroupLabel>
-						<SidebarMenu>
-							{data.lastMonthChats.map((chat) => (
-								<SidebarMenuItem key={chat.title}>
-									<SidebarMenuButton className="w-full justify-start">
-										<MessageCircle className="mr-2 h-4 w-4" />
-										{chat.title}
-									</SidebarMenuButton>
-								</SidebarMenuItem>
-							))}
-						</SidebarMenu>
-					</SidebarGroup>
+          {/* Previous 30 Days */}
+          <SidebarGroup>
+            <SidebarGroupLabel>Previous 30 Days</SidebarGroupLabel>
+            <SidebarMenu>
+              {data.lastMonthChats.map((chat) => (
+                <SidebarMenuItem key={chat.title}>
+                  <SidebarMenuButton className="w-full justify-start">
+                    <MessageCircle className="mr-2 h-4 w-4" />
+                    {chat.title}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroup>
 
-					{/* Previous Years */}
-					<SidebarGroup>
-						<SidebarGroupLabel>Previous Years</SidebarGroupLabel>
-						<SidebarMenu>
-							{data.previousChats.map((chat) => (
-								<SidebarMenuItem key={chat.title}>
-									<SidebarMenuButton className="w-full justify-start">
-										<MessageCircle className="mr-2 h-4 w-4" />
-										{chat.title}
-									</SidebarMenuButton>
-								</SidebarMenuItem>
-							))}
-						</SidebarMenu>
-					</SidebarGroup>
-				</div>
-			</SidebarContent>
-			<SidebarRail />
-			<SidebarFooter>
-				<NavUser user={data.user} />
-			</SidebarFooter>
-		</Sidebar>
-	);
+          {/* Previous Years */}
+          <SidebarGroup>
+            <SidebarGroupLabel>Previous Years</SidebarGroupLabel>
+            <SidebarMenu>
+              {data.previousChats.map((chat) => (
+                <SidebarMenuItem key={chat.title}>
+                  <SidebarMenuButton className="w-full justify-start">
+                    <MessageCircle className="mr-2 h-4 w-4" />
+                    {chat.title}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroup>
+        </div>
+      </SidebarContent>
+      <SidebarRail />
+      <SidebarFooter>{/* <NavUser user={data.user} /> */}</SidebarFooter>
+    </Sidebar>
+  );
 }

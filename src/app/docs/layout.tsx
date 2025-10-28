@@ -1,6 +1,6 @@
 import { source } from "@/lib/source";
-import { DocsSidebar } from "./components/docs-sidebar";
-import { SidebarProvider } from "@/components/ui/sidebar";
+
+
 
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
