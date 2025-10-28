@@ -110,7 +110,7 @@ export function DocsPage({ toc = [], ...props }: DocsPageProps) {
           </div>
         </div>
       )}
-      {svg ? (
+      {/* {svg ? (
         <div
           className="absolute start-0 top-0 rtl:-scale-x-100"
           style={{
@@ -143,7 +143,7 @@ export function DocsPage({ toc = [], ...props }: DocsPageProps) {
             lower={items[i + 1]?.depth}
           />
         ))}
-      </div>
+      </div> */}
     </AnchorProvider>
   );
 }
