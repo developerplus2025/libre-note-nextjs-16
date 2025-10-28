@@ -4,7 +4,7 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import { Sidebar, SidebarContent } from "@/src/components/sidebar";
+
 import { DocsLayout } from "@/components/layout/docs";
 import { baseOptions, docsOptions } from "@/lib/layout.shared";
 
