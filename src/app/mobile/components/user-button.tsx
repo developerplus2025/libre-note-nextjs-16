@@ -23,13 +23,14 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
-import { useSearchContext } from "fumadocs-ui/provider/next";
+
 import Image from "next/image";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import X from "@/components/x";
 import FeedBack from "@/components/feedback";
 import GitHub from "@/components/GitHub";
 import { Loader } from "@/components/ui/loader";
+import { useSearchContext } from "fumadocs-ui/contexts/search";
 function removeVietnameseTones(str?: string): string {
   if (!str) return "";
   return str
