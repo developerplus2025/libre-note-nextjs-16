@@ -33,7 +33,7 @@ export function VersionSwitcher({ VersionGuided, defaultModeGuided }: Props) {
   const selectedItem = VersionGuided.find((item) => item.id === selectedId);
 
   return (
-    <SidebarMenu className="pl-[1.5rem]">
+    <SidebarMenu className="">
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger

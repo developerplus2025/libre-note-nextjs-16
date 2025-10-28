@@ -43,7 +43,7 @@ export function ModeGuidedSwitcher({
   const items = Object.entries(ModeGuided); // [['docs', {...}], ['api', {...}]]
 
   return (
-    <SidebarMenu className="pl-[1.5rem]">
+    <SidebarMenu className="">
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger
