@@ -1,12 +1,8 @@
 "use client";
 import type * as PageTree from "fumadocs-core/page-tree";
-import { type ComponentProps, Fragment, type ReactNode, useMemo } from "react";
+import { type ComponentProps, type ReactNode, useMemo } from "react";
 import { cn } from "../../src/lib/cn";
-import {
-  TreeContextProvider,
-  useTreeContext,
-  useTreePath,
-} from "fumadocs-ui/contexts/tree";
+import { TreeContextProvider, useTreeContext } from "fumadocs-ui/contexts/tree";
 import Link from "fumadocs-core/link";
 import { useSearchContext } from "fumadocs-ui/contexts/search";
 import { useSidebar } from "fumadocs-ui/contexts/sidebar";
@@ -22,11 +18,6 @@ import { VersionSwitcher } from "../version-switcher";
 import { ModeGuidedSwitcher } from "../mode-guided-switcher";
 import { SidebarProvider } from "../ui/sidebar";
 import * as Primitive from "fumadocs-core/toc";
-import {
-  BreadcrumbOptions,
-  getBreadcrumbItemsFromPath,
-} from "fumadocs-core/breadcrumb";
-import { ChevronRight } from "lucide-react";
 export interface DocsLayoutProps {
   tree: PageTree.Root;
   children: ReactNode;
@@ -201,75 +192,16 @@ function SearchToggle(props: ComponentProps<"button">) {
 //     </button>
 //   );
 // }
-export type BreadcrumbProps = BreadcrumbOptions & ComponentProps<"div">;
-
-export function PageBreadcrumb({
-  includeRoot,
-  includeSeparator,
-  includePage,
-  ...props
-}: BreadcrumbProps) {
-  const path = useTreePath();
-  const { root } = useTreeContext();
-  const items = useMemo(() => {
-    return getBreadcrumbItemsFromPath(root, path, {
-      includePage,
-      includeSeparator,
-      includeRoot,
-    });
-  }, [includePage, includeRoot, includeSeparator, path, root]);
-
-  if (items.length === 0) return null;
-
-  return (
-    <div
-      {...props}
-      className={cn(
-        "text-fd-muted-foreground flex items-center gap-1.5 text-sm",
-        props.className,
-      )}
-    >
-      {items.map((item, i) => {
-        const className = cn(
-          "truncate",
-          i === items.length - 1 && "text-fd-primary font-medium",
-        );
-
-        return (
-          <Fragment key={i}>
-            {i !== 0 && <ChevronRight className="size-3.5 shrink-0" />}
-            {item.url ? (
-              <Link
-                href={item.url}
-                className={cn(className, "transition-opacity hover:opacity-80")}
-              >
-                {item.name}
-              </Link>
-            ) : (
-              <span className={className}>{item.name}</span>
-            )}
-          </Fragment>
-        );
-      })}
-    </div>
-  );
-}
 export function PageTOC(props: ComponentProps<"div">) {
-  const { collapsed } = useSidebar();
-  const offset = collapsed ? "0px" : "var(--fd-layout-offset)";
-
   return (
     <div
       id="nd-toc"
       {...props}
-      className={cn(
-        "xl:on-root:[--fd-toc-width:286px] fixed bottom-0 pt-12 pr-(--removed-body-scroll-bar-size,0) pb-2 max-xl:hidden",
-        props.className,
-      )}
+      className={cn("sticky pt-12 pb-2 max-xl:hidden", props.className)}
       style={{
         ...props.style,
         top: "calc(var(--fd-banner-height) + var(--fd-nav-height))",
-        insetInlineEnd: `max(${offset}, calc(50vw - var(--fd-sidebar-width)/2 - var(--fd-page-width)/2))`,
+        height: "calc(100dvh - var(--fd-banner-height) - var(--fd-nav-height))",
       }}
     >
       <div className="flex h-full w-(--fd-toc-width) max-w-full flex-col pe-4">
