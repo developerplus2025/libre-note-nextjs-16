@@ -70,7 +70,7 @@ const data = {
       name: "api",
       title: "API Reference",
       description: "The Guided For Developer",
-      directSrc: "api-reference",
+      directSrc: "docs/api-reference",
     },
   },
 };
@@ -96,6 +96,7 @@ const version = [
         ></path>
       </svg>
     ),
+    directSrc: "docs",
   },
   {
     id: 2,
@@ -118,6 +119,7 @@ const version = [
         ></path>
       </svg>
     ),
+    directSrc: "5.4.2",
   },
   {
     id: 3,
@@ -140,6 +142,7 @@ const version = [
         ></path>
       </svg>
     ),
+    directSrc: "4.5.9",
   },
 ];
 export function DocsLayout({ tree, children }: DocsLayoutProps) {

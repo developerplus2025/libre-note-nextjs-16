@@ -13,12 +13,14 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { useRouter } from "next/navigation";
 
 type VersionGuidedItem = {
   id: number;
   name: string;
   version: string;
   icon: React.JSX.Element;
+  directSrc: string;
 };
 
 type Props = {
@@ -31,7 +33,7 @@ export function VersionSwitcher({ VersionGuided, defaultModeGuided }: Props) {
 
   // tìm object đang được chọn
   const selectedItem = VersionGuided.find((item) => item.id === selectedId);
-
+const router = useRouter();
   return (
     <SidebarMenu className="">
       <SidebarMenuItem>
@@ -67,7 +69,9 @@ export function VersionSwitcher({ VersionGuided, defaultModeGuided }: Props) {
               <DropdownMenuItem
                 className="gap-[1rem] hover:!bg-[#1b1b1b]"
                 key={item.id}
-                onSelect={() => setSelectedId(item.id)}
+                onSelect={() => {
+                  setSelectedId(item.id), router.push(`/${item.directSrc}`);
+                }}
               >
                 {item.icon}
                 <div className="flex flex-col text-xs">
