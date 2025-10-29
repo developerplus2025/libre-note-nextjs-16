@@ -1,171 +1,275 @@
-"use client";
-
-import { type ComponentProps, type ReactNode, useMemo } from "react";
+import { type ComponentProps, forwardRef, type ReactNode } from 'react';
+import { cn } from '../../src/lib/cn';
+import { buttonVariants } from '../../src/components/ui/button';
+import { Edit } from 'lucide-react';
+import { I18nLabel } from 'fumadocs-ui/contexts/i18n';
 import {
-  AnchorProvider,
-  type TOCItemType,
-  useActiveAnchors,
-} from "fumadocs-core/toc";
-import { cn } from "../../src/lib/cn";
-import { useTreeContext } from "fumadocs-ui/contexts/tree";
-import { Link, usePathname } from "fumadocs-core/framework";
-import type * as PageTree from "fumadocs-core/page-tree";
-import * as Primitive from "fumadocs-core/toc";
+  type BreadcrumbProps,
+  type FooterProps,
+  PageArticle,
+  PageBreadcrumb,
+  PageFooter,
+  PageLastUpdate,
+  PageRoot,
+  PageTOC,
+  PageTOCItems,
+  PageTOCPopover,
+  PageTOCPopoverContent,
+  PageTOCPopoverItems,
+  PageTOCPopoverTrigger,
+  PageTOCTitle,
+} from './docs/page';
+import type { AnchorProviderProps, TOCItemType } from 'fumadocs-core/toc';
+
+interface EditOnGitHubOptions
+  extends Omit<ComponentProps<'a'>, 'href' | 'children'> {
+  owner: string;
+  repo: string;
+
+  /**
+   * SHA or ref (branch or tag) name.
+   *
+   * @defaultValue main
+   */
+  sha?: string;
+
+  /**
+   * File path in the repo
+   */
+  path: string;
+}
+
+interface BreadcrumbOptions extends BreadcrumbProps {
+  enabled: boolean;
+  component: ReactNode;
+}
+
+interface FooterOptions extends FooterProps {
+  enabled: boolean;
+  component: ReactNode;
+}
+
 export interface DocsPageProps {
   toc?: TOCItemType[];
+  tableOfContent?: Partial<TableOfContentOptions>;
+  tableOfContentPopover?: Partial<TableOfContentPopoverOptions>;
 
-  children: ReactNode;
+  /**
+   * Extend the page to fill all available space
+   *
+   * @defaultValue false
+   */
+  full?: boolean;
+
+  /**
+   * Replace or disable breadcrumb
+   */
+  breadcrumb?: Partial<BreadcrumbOptions>;
+
+  /**
+   * Footer navigation, you can disable it by passing `false`
+   */
+  footer?: Partial<FooterOptions>;
+
+  editOnGithub?: EditOnGitHubOptions;
+  lastUpdate?: Date | string | number;
+
+  container?: ComponentProps<'div'>;
+  article?: ComponentProps<'article'>;
+  children?: ReactNode;
 }
 
-export function DocsPage({ toc = [], ...props }: DocsPageProps) {
+type TableOfContentOptions = Pick<AnchorProviderProps, 'single'> & {
+  /**
+   * Custom content in TOC container, before the main TOC
+   */
+  header?: ReactNode;
+
+  /**
+   * Custom content in TOC container, after the main TOC
+   */
+  footer?: ReactNode;
+
+  enabled: boolean;
+  component: ReactNode;
+
+  /**
+   * @defaultValue 'normal'
+   */
+  style?: 'normal' | 'clerk';
+};
+
+type TableOfContentPopoverOptions = Omit<TableOfContentOptions, 'single'>;
+
+export function DocsPage({
+  editOnGithub,
+  breadcrumb: {
+    enabled: breadcrumbEnabled = true,
+    component: breadcrumb,
+    ...breadcrumbProps
+  } = {},
+  footer = {},
+  lastUpdate,
+  container,
+  full = false,
+  tableOfContentPopover: {
+    enabled: tocPopoverEnabled,
+    component: tocPopover,
+    ...tocPopoverOptions
+  } = {},
+  tableOfContent: {
+    enabled: tocEnabled,
+    component: tocReplace,
+    ...tocOptions
+  } = {},
+  toc = [],
+  article,
+  children,
+}: DocsPageProps) {
+  // disable TOC on full mode, you can still enable it with `enabled` option.
+  tocEnabled ??=
+    !full &&
+    (toc.length > 0 ||
+      tocOptions.footer !== undefined ||
+      tocOptions.header !== undefined);
+
+  tocPopoverEnabled ??=
+    toc.length > 0 ||
+    tocPopoverOptions.header !== undefined ||
+    tocPopoverOptions.footer !== undefined;
+
   return (
-    <AnchorProvider toc={toc}>
-      <main className="flex w-full min-w-0 flex-col">
-        <article className="flex w-full max-w-2xl flex-1 flex-col gap-6 px-4 py-8 md:mx-auto md:px-6">
-          {props.children}
-          <Footer />
-        </article>
-      </main>
-      {toc.length > 0 && (
-        <div className="sticky top-[6rem] h-[500px] w-[286px] shrink-0 overflow-auto p-4 max-xl:hidden">
-          <p className="text-fd-muted-foreground mb-2 text-sm">On this page</p>
-          <div className="flex flex-col">
-            {toc.map((item) => (
-              <TOCItem key={item.url} item={item} />
-            ))}
-          </div>
+    <PageRoot
+      toc={
+        tocEnabled || tocPopoverEnabled
+          ? {
+              toc,
+              single: tocOptions.single,
+            }
+          : false
+      }
+      {...container}
+    >
+      {tocPopoverEnabled &&
+        (tocPopover ?? (
+          <PageTOCPopover>
+            <PageTOCPopoverTrigger />
+            <PageTOCPopoverContent>
+              {tocPopoverOptions.header}
+              <PageTOCPopoverItems variant={tocPopoverOptions.style} />
+              {tocPopoverOptions.footer}
+            </PageTOCPopoverContent>
+          </PageTOCPopover>
+        ))}
+      <PageArticle {...article}>
+        {breadcrumbEnabled &&
+          (breadcrumb ?? <PageBreadcrumb {...breadcrumbProps} />)}
+        {children}
+        <div className="flex flex-row flex-wrap items-center justify-between gap-4 empty:hidden">
+          {editOnGithub && (
+            <EditOnGitHub
+              href={`https://github.com/${editOnGithub.owner}/${editOnGithub.repo}/blob/${editOnGithub.sha}/${editOnGithub.path.startsWith('/') ? editOnGithub.path.slice(1) : editOnGithub.path}`}
+            />
+          )}
+          {lastUpdate && <PageLastUpdate date={new Date(lastUpdate)} />}
         </div>
-      )}
-    </AnchorProvider>
+        {footer.enabled !== false &&
+          (footer.component ?? <PageFooter items={footer.items} />)}
+      </PageArticle>
+      {tocEnabled &&
+        (tocReplace ?? (
+          <PageTOC>
+            {tocOptions.header}
+            <PageTOCTitle />
+            <PageTOCItems variant={tocOptions.style} />
+            {tocOptions.footer}
+          </PageTOC>
+        ))}
+    </PageRoot>
   );
 }
 
-export function DocsBody(props: ComponentProps<"div">) {
+export function EditOnGitHub(props: ComponentProps<'a'>) {
   return (
-    <div {...props} className={cn("prose", props.className)}>
+    <a
+      target="_blank"
+      rel="noreferrer noopener"
+      {...props}
+      className={cn(
+        buttonVariants({
+          color: 'secondary',
+          size: 'sm',
+          className: 'gap-1.5 not-prose',
+        }),
+        props.className,
+      )}
+    >
+      {props.children ?? (
+        <>
+          <Edit className="size-3.5" />
+          <I18nLabel label="editOnGithub" />
+        </>
+      )}
+    </a>
+  );
+}
+
+/**
+ * Add typography styles
+ */
+export const DocsBody = forwardRef<HTMLDivElement, ComponentProps<'div'>>(
+  (props, ref) => (
+    <div ref={ref} {...props} className={cn('prose flex-1', props.className)}>
       {props.children}
     </div>
-  );
-}
+  ),
+);
 
-export function DocsDescription(props: ComponentProps<"p">) {
+DocsBody.displayName = 'DocsBody';
+
+export const DocsDescription = forwardRef<
+  HTMLParagraphElement,
+  ComponentProps<'p'>
+>((props, ref) => {
   // don't render if no description provided
   if (props.children === undefined) return null;
 
   return (
     <p
+      ref={ref}
       {...props}
-      className={cn("text-fd-muted-foreground mb-8 text-lg", props.className)}
+      className={cn('mb-8 text-lg text-fd-muted-foreground', props.className)}
     >
       {props.children}
     </p>
   );
-}
+});
 
-export function DocsTitle(props: ComponentProps<"h1">) {
+DocsDescription.displayName = 'DocsDescription';
+
+export const DocsTitle = forwardRef<HTMLHeadingElement, ComponentProps<'h1'>>(
+  (props, ref) => {
+    return (
+      <h1
+        ref={ref}
+        {...props}
+        className={cn('text-[1.75em] font-semibold', props.className)}
+      >
+        {props.children}
+      </h1>
+    );
+  },
+);
+
+DocsTitle.displayName = 'DocsTitle';
+
+/**
+ * For separate MDX page
+ */
+export function withArticle(props: ComponentProps<'main'>): ReactNode {
   return (
-    <h1 {...props} className={cn("text-3xl font-semibold", props.className)}>
-      {props.children}
-    </h1>
-  );
-}
-
-function getItemOffset(depth: number): number {
-  if (depth <= 2) return 14;
-  if (depth === 3) return 26;
-  return 36;
-}
-
-function getLineOffset(depth: number): number {
-  return depth >= 3 ? 10 : 0;
-}
-
-function TOCItem({
-  item,
-  upper = item.depth,
-  lower = item.depth,
-}: {
-  item: Primitive.TOCItemType;
-  upper?: number;
-  lower?: number;
-}) {
-  const offset = getLineOffset(item.depth),
-    upperOffset = getLineOffset(upper),
-    lowerOffset = getLineOffset(lower);
-
-  return (
-    <Primitive.TOCItem
-      href={item.url}
-      style={{
-        paddingInlineStart: getItemOffset(item.depth),
-      }}
-      className="prose text-fd-muted-foreground hover:text-fd-accent-foreground data-[active=true]:text-fd-primary relative py-1.5 text-sm [overflow-wrap:anywhere] transition-colors first:pt-0 last:pb-0"
-    >
-      {offset !== upperOffset ? (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 16 16"
-          className="absolute start-0 -top-1.5 size-4 rtl:-scale-x-100"
-        >
-          <line
-            x1={upperOffset}
-            y1="0"
-            x2={offset}
-            y2="12"
-            className="stroke-fd-foreground/10"
-            strokeWidth="1"
-          />
-        </svg>
-      ) : null}
-      <div
-        className={cn(
-          "bg-fd-foreground/10 absolute inset-y-0 w-px",
-          offset !== upperOffset && "top-1.5",
-          offset !== lowerOffset && "bottom-1.5",
-        )}
-        style={{
-          insetInlineStart: offset,
-        }}
-      />
-      {item.title}
-    </Primitive.TOCItem>
-  );
-}
-
-function Footer() {
-  const { root } = useTreeContext();
-  const pathname = usePathname();
-  const flatten = useMemo(() => {
-    const result: PageTree.Item[] = [];
-
-    function scan(items: PageTree.Node[]) {
-      for (const item of items) {
-        if (item.type === "page") result.push(item);
-        else if (item.type === "folder") {
-          if (item.index) result.push(item.index);
-          scan(item.children);
-        }
-      }
-    }
-
-    scan(root.children);
-    return result;
-  }, [root]);
-
-  const { previous, next } = useMemo(() => {
-    const idx = flatten.findIndex((item) => item.url === pathname);
-
-    if (idx === -1) return {};
-    return {
-      previous: flatten[idx - 1],
-      next: flatten[idx + 1],
-    };
-  }, [flatten, pathname]);
-
-  return (
-    <div className="flex flex-row items-center justify-between gap-2 font-medium">
-      {previous ? <Link href={previous.url}>{previous.name}</Link> : null}
-      {next ? <Link href={next.url}>{next.name}</Link> : null}
-    </div>
+    <main {...props} className={cn('container py-12', props.className)}>
+      <article className="prose">{props.children}</article>
+    </main>
   );
 }
