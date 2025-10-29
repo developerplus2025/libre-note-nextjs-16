@@ -1,4 +1,4 @@
 {
   "root": true,
-  "pages": ["(root)", "api-reference"]
+  "pages": ["(root)", "5.4.2", "4.5.9", "api-reference"]
 }

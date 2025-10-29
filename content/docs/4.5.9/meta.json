@@ -1,0 +1,17 @@
+{
+  "title": "Docs",
+  "description": "The docs for LibreNote",
+  "root": true,
+  "pages": [
+    "index",
+    "getting-started",
+    "playback-features",
+    "audio-effects",
+    "library-management",
+    "settings-customization",
+    "advanced-usage",
+    "troubleshooting",
+    "user-windows-download",
+    "glss"
+  ]
+}
