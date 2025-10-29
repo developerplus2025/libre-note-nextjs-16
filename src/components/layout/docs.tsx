@@ -46,6 +46,7 @@ const data = {
       name: "docs",
       title: "Docs",
       description: "The Guided For User",
+      directSrc: "docs",
     },
     api: {
       id: 2,
@@ -69,6 +70,7 @@ const data = {
       name: "api",
       title: "API Reference",
       description: "The Guided For Developer",
+      directSrc: "api-reference",
     },
   },
 };

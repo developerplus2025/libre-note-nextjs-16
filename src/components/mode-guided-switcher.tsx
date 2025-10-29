@@ -15,6 +15,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { useRouter } from "next/navigation";
 
 type ModeItem = {
   id: number;
@@ -22,6 +23,7 @@ type ModeItem = {
   name: string;
   title: string;
   description: string;
+  directSrc: string;
 };
 
 type ModeGuided = {
@@ -41,7 +43,7 @@ export function ModeGuidedSwitcher({
   >(defaultModeGuided as keyof ModeGuided);
 
   const items = Object.entries(ModeGuided); // [['docs', {...}], ['api', {...}]]
-
+const router = useRouter();
   return (
     <SidebarMenu className="">
       <SidebarMenuItem>
@@ -76,7 +78,10 @@ export function ModeGuidedSwitcher({
               <DropdownMenuItem
                 className="gap-[1rem] hover:!bg-[#1b1b1b]"
                 key={key}
-                onSelect={() => setSelectedGuidedMode(key as keyof ModeGuided)}
+                onSelect={() => {
+                  setSelectedGuidedMode(key as keyof ModeGuided),
+                    router.push(`/${value.directSrc}`);
+                }}
               >
                 {value.icon}
                 <div className="flex flex-col text-xs">
