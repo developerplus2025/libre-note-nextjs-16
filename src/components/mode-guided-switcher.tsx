@@ -58,7 +58,7 @@ export function ModeGuidedSwitcher({
                 {ModeGuided[selectedGuidedMode].icon}
               </div>
               <div className="flex flex-col gap-0.5 leading-none">
-                <span className="font-medium">
+                <span className="text-xs font-medium">
                   {ModeGuided[selectedGuidedMode].title}
                 </span>
                 <span className="text-xs text-[#a1a1a1]">
@@ -81,7 +81,7 @@ export function ModeGuidedSwitcher({
                 {value.icon}
                 <div className="flex flex-col text-xs">
                   <span> {value.title}</span>
-                  <span> {value.description}</span>
+                  <span className="text-[#a1a1a1]"> {value.description}</span>
                 </div>
                 {key === selectedGuidedMode && <Check className="ml-auto" />}
               </DropdownMenuItem>

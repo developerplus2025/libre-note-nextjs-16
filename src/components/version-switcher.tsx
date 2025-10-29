@@ -48,7 +48,9 @@ export function VersionSwitcher({ VersionGuided, defaultModeGuided }: Props) {
                 {selectedItem?.icon}
               </div>
               <div className="flex flex-col gap-0.5 leading-none">
-                <span className="font-medium">Using {selectedItem?.name}</span>
+                <span className="text-xs font-medium">
+                  Using {selectedItem?.name}
+                </span>
                 <span className="text-xs text-[#a1a1a1]">
                   {selectedItem?.version}
                 </span>
@@ -70,7 +72,7 @@ export function VersionSwitcher({ VersionGuided, defaultModeGuided }: Props) {
                 {item.icon}
                 <div className="flex flex-col text-xs">
                   <span>{item.name}</span>
-                  <span>{item.version}</span>
+                  <span className="text-[#a1a1a1]">{item.version}</span>
                 </div>
 
                 {item.id === selectedId && <Check className="ml-auto" />}
