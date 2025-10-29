@@ -80,7 +80,7 @@ const router = useRouter();
                 key={key}
                 onSelect={() => {
                   setSelectedGuidedMode(key as keyof ModeGuided),
-                    router.push(`/${value.directSrc}`);
+                    router.push(`/docs/${value.directSrc}`);
                 }}
               >
                 {value.icon}

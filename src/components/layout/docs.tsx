@@ -46,7 +46,7 @@ const data = {
       name: "docs",
       title: "Docs",
       description: "The Guided For User",
-      directSrc: "docs",
+      directSrc: "",
     },
     api: {
       id: 2,
@@ -70,7 +70,7 @@ const data = {
       name: "api",
       title: "API Reference",
       description: "The Guided For Developer",
-      directSrc: "docs/api-reference",
+      directSrc: "api-reference",
     },
   },
 };
@@ -96,7 +96,7 @@ const version = [
         ></path>
       </svg>
     ),
-    directSrc: "docs",
+    directSrc: "",
   },
   {
     id: 2,

@@ -70,7 +70,8 @@ const router = useRouter();
                 className="gap-[1rem] hover:!bg-[#1b1b1b]"
                 key={item.id}
                 onSelect={() => {
-                  setSelectedId(item.id), router.push(`/${item.directSrc}`);
+                  setSelectedId(item.id),
+                    router.push(`/docs/${item.directSrc}`);
                 }}
               >
                 {item.icon}
