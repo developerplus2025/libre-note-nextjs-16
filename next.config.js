@@ -1,4 +1,4 @@
-const { createMDX } = require("fumadocs-mdx/next");
+import { createMDX } from "fumadocs-mdx/next";
 const withMDX = createMDX();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -19,6 +19,7 @@ const nextConfig = {
   },
   experimental: {
     viewTransition: true,
+    turbopackFileSystemCacheForDev: true,
   },
   images: {
     formats: ["image/avif"],
@@ -37,4 +38,4 @@ const nextConfig = {
 };
 
 // Gộp 2 middleware lại
-module.exports = withMDX(nextConfig);
+export default withMDX(nextConfig);
