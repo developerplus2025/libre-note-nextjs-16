@@ -1,11 +1,13 @@
 import { createMDX } from "fumadocs-mdx/next";
 const withMDX = createMDX();
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
   async rewrites() {
     return [
       {
         source: "/api/c15t/:path*",
+        // eslint-disable-next-line no-undef
         destination: `${process.env.NEXT_PUBLIC_C15T_URL}/:path*`,
       },
     ];
@@ -37,5 +39,5 @@ const nextConfig = {
   },
 };
 
-// Gộp 2 middleware lại
+
 export default withMDX(nextConfig);
