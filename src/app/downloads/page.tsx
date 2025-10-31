@@ -116,13 +116,13 @@ export default function DownloadsPage() {
         <div className="container space-y-12 px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="mt-12">
-              <div className="inline-block rounded-lg bg-muted px-3 py-1 text-sm">
+              <div className="bg-muted inline-block rounded-lg px-3 py-1 text-sm">
                 Key Features
               </div>
               <h2 className="mt-8 text-3xl font-bold tracking-tighter sm:text-5xl">
                 Why Choose the Music App?
               </h2>
-              <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              <p className="text-muted-foreground max-w-[900px] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                 The Music App offers a seamless and personalized music listening
                 experience with a range of features to enhance your enjoyment.
               </p>
@@ -131,7 +131,7 @@ export default function DownloadsPage() {
           <div className="mx-auto grid items-start gap-8 sm:max-w-4xl sm:grid-cols-2 md:gap-12 lg:max-w-5xl lg:grid-cols-3">
             <div className="grid gap-1">
               <h3 className="text-lg font-bold">Offline Listening</h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Download your favorite songs and playlists to listen offline,
                 anytime, anywhere.
               </p>
@@ -140,35 +140,35 @@ export default function DownloadsPage() {
               <h3 className="text-lg font-bold">
                 Personalized Recommendations
               </h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Get tailored music recommendations based on your listening
                 history and preferences.
               </p>
             </div>
             <div className="grid gap-1">
               <h3 className="text-lg font-bold">High-Quality Audio</h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Enjoy your music in high-quality audio, delivering a immersive
                 listening experience.
               </p>
             </div>
             <div className="grid gap-1">
               <h3 className="text-lg font-bold">Seamless Sync</h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Sync your music library across all your devices for
                 uninterrupted listening.
               </p>
             </div>
             <div className="grid gap-1">
               <h3 className="text-lg font-bold">Curated Playlists</h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Discover new music with expertly curated playlists tailored to
                 your taste.
               </p>
             </div>
             <div className="grid gap-1">
               <h3 className="text-lg font-bold">Intuitive Interface</h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Navigate your music library with ease using the user-friendly
                 and intuitive app interface.
               </p>
@@ -177,7 +177,7 @@ export default function DownloadsPage() {
           <div className="flex flex-col items-start justify-center gap-4 sm:flex-row">
             <Link
               href="#"
-              className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:ring-ring inline-flex h-10 items-center justify-center rounded-md px-8 text-sm font-medium shadow-sm transition-colors focus-visible:ring-1 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50"
               prefetch={false}
             >
               Download
