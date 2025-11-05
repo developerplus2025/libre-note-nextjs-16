@@ -238,8 +238,9 @@ function Sidebar() {
   }, [root]);
   const pathname = usePathname();
   const [modeGuided, setModeGuided] = useState(
-    pathname.split("/")[pathname.length - 1],
+    pathname.split("/")[pathname.split("/").length - 1],
   );
+  console.log(modeGuided);
   const [versionGuided, setVersionGuided] = useState(
     pathname.split("/")[pathname.length - 1],
   );
@@ -247,7 +248,7 @@ function Sidebar() {
     setModeGuided(pathname.split("/")[pathname.length - 1]);
     setVersionGuided(pathname.split("/")[pathname.length - 1]);
   }, [pathname]);
-  
+
   return (
     <aside
       className={cn(
@@ -257,14 +258,8 @@ function Sidebar() {
       )}
     >
       <SidebarProvider className="flex min-h-[100px] flex-col gap-[1rem]">
-        <ModeGuidedSwitcher
-          ModeGuided={data.mode}
-          defaultModeGuided={modeGuided}
-        />
-        <VersionSwitcher
-          VersionGuided={version}
-          defaultModeGuided={"Latest Version"}
-        />
+        <ModeGuidedSwitcher ModeGuided={data.mode} />
+        <VersionSwitcher VersionGuided={version} />
       </SidebarProvider>
       <ScrollArea className="md:h-[calc(100dvh-118px)]">{children}</ScrollArea>
     </aside>

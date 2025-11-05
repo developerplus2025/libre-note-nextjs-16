@@ -1,9 +1,7 @@
-
-
 "use client";
 
 import * as React from "react";
-import { Check, ChevronsUpDown, GalleryVerticalEnd } from "lucide-react";
+import { Check, ChevronsUpDown } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,7 +13,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 type ModeItem = {
   id: number;
@@ -31,21 +29,31 @@ type ModeGuided = {
   api: ModeItem;
 };
 
-export function ModeGuidedSwitcher({
-  ModeGuided,
-  defaultModeGuided,
-}: {
-  ModeGuided: ModeGuided;
-  defaultModeGuided: string; // 'docs' hoặc 'api'
-}) {
+export function ModeGuidedSwitcher({ ModeGuided }: { ModeGuided: ModeGuided }) {
+  const router = useRouter();
+  const pathname = usePathname();
+
   const [selectedGuidedMode, setSelectedGuidedMode] = React.useState<
     keyof ModeGuided
-  >(defaultModeGuided as keyof ModeGuided);
+  >(pathname.includes("api-reference") ? "api" : "docs");
+
+ // 🔹 Xác định mode dựa theo pathname
+ React.useEffect(() => {
+   if (pathname.includes("api-reference")) {
+     setSelectedGuidedMode("api");
+   } else {
+     setSelectedGuidedMode("docs");
+   }
+ }, [pathname]);
 
   const items = Object.entries(ModeGuided); // [['docs', {...}], ['api', {...}]]
-  const router = useRouter();
+
+  const current = ModeGuided[selectedGuidedMode];
+
+  if (!current) return null; // tránh crash khi chưa có dữ liệu
+
   return (
-    <SidebarMenu className="">
+    <SidebarMenu>
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger
@@ -57,36 +65,35 @@ export function ModeGuidedSwitcher({
               className="data-[state=open]:text-sidebar-accent-foreground hover:bg-black data-[state=open]:bg-[#1b1b1b]"
             >
               <div className="text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg border border-transparent">
-                {ModeGuided[selectedGuidedMode].icon}
+                {current.icon}
               </div>
               <div className="flex flex-col gap-0.5 leading-none">
-                <span className="text-xs font-medium">
-                  {ModeGuided[selectedGuidedMode].title}
-                </span>
+                <span className="text-xs font-medium">{current.title}</span>
                 <span className="text-xs text-[#a1a1a1]">
-                  {ModeGuided[selectedGuidedMode].description}
+                  {current.description}
                 </span>
               </div>
               <ChevronsUpDown className="ml-auto" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
+
           <DropdownMenuContent
             className="w-(--radix-dropdown-menu-trigger-width)"
             align="start"
           >
             {items.map(([key, value]) => (
               <DropdownMenuItem
-                className="gap-[1rem] hover:!bg-[#1b1b1b]"
                 key={key}
+                className="gap-[1rem] hover:!bg-[#1b1b1b]"
                 onSelect={() => {
-                  (setSelectedGuidedMode(key as keyof ModeGuided),
-                    router.push(`/docs/${value.directSrc}`));
+                  setSelectedGuidedMode(key as keyof ModeGuided);
+                  router.push(`/docs/${value.directSrc}`);
                 }}
               >
                 {value.icon}
                 <div className="flex flex-col text-xs">
-                  <span> {value.title}</span>
-                  <span className="text-[#a1a1a1]"> {value.description}</span>
+                  <span>{value.title}</span>
+                  <span className="text-[#a1a1a1]">{value.description}</span>
                 </div>
                 {key === selectedGuidedMode && <Check className="ml-auto" />}
               </DropdownMenuItem>

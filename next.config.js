@@ -7,7 +7,7 @@ const nextConfig = {
     return [
       {
         source: "/api/c15t/:path*",
-        // eslint-disable-next-line no-undef
+
         destination: `${process.env.NEXT_PUBLIC_C15T_URL}/:path*`,
       },
     ];
