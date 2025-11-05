@@ -25,33 +25,43 @@ type VersionGuidedItem = {
 
 type Props = {
   VersionGuided: VersionGuidedItem[];
-  defaultModeGuided: string; // version mặc định (vd: "5.4.2")
+  defaultModeGuided: string; // ví dụ: "Latest Version"
 };
 
 export function VersionSwitcher({ VersionGuided, defaultModeGuided }: Props) {
   const pathname = usePathname();
   const router = useRouter();
 
-  // lấy các phần trong URL
-  const segments = pathname.split("/").filter(Boolean); // loại bỏ phần rỗng
+  // chia path
+  const segments = pathname.split("/").filter(Boolean);
 
-  // logic lấy version từ URL
-  const currentVersion = segments[segments.length - 1]?.match(/^\d+(\.\d+)*$/) // kiểm tra xem có phải version dạng 1.0.0
-    ? segments[segments.length - 1]
-    : segments.length > 2 && segments[2]?.match(/^\d+(\.\d+)*$/)
-      ? segments[2]
-      : defaultModeGuided;
+  // lấy version từ URL (nếu có dạng x.y.z)
+  const urlVersion = segments.find((seg) => /^\d+(\.\d+)*$/.test(seg));
+
+  // xác định version hiện tại
+  const currentVersion =
+    urlVersion ||
+    VersionGuided.find((v) => v.name === defaultModeGuided)?.version ||
+    "";
 
   const [selectedId, setSelectedId] = React.useState<string>(currentVersion);
 
-  // Cập nhật khi pathname thay đổi
+  // cập nhật state khi pathname thay đổi
   React.useEffect(() => {
     setSelectedId(currentVersion);
   }, [pathname]);
 
   const selectedItem = VersionGuided.find(
-    (item) => item.name === selectedId || item.version === selectedId,
+    (item) => item.version === selectedId,
   );
+
+  const basePath = React.useMemo(() => {
+    // loại bỏ phần version khỏi URL nếu có
+    if (urlVersion) {
+      return pathname.replace(`/${urlVersion}`, "");
+    }
+    return pathname.endsWith("/") ? pathname.slice(0, -1) : pathname;
+  }, [pathname, urlVersion]);
 
   return (
     <SidebarMenu>
@@ -70,10 +80,10 @@ export function VersionSwitcher({ VersionGuided, defaultModeGuided }: Props) {
               </div>
               <div className="flex flex-col gap-0.5 leading-none">
                 <span className="text-xs font-medium">
-                  Using {selectedItem?.name || "Unknown"}
+                  Using {selectedItem?.name || defaultModeGuided}
                 </span>
                 <span className="text-xs text-[#a1a1a1]">
-                  {selectedItem?.version || defaultModeGuided}
+                  {selectedItem?.version || ""}
                 </span>
               </div>
               <ChevronsUpDown className="ml-auto" />
@@ -89,14 +99,14 @@ export function VersionSwitcher({ VersionGuided, defaultModeGuided }: Props) {
                 key={item.id}
                 className="gap-[1rem] hover:!bg-[#1b1b1b]"
                 onSelect={() => {
-                  setSelectedId(item.name);
-                  // giữ nguyên phần đầu của path, chỉ thay version
-                  const basePath =
-                    segments.length >= 3 && segments[2].match(/^\d+(\.\d+)*$/)
-                      ? segments.slice(0, -1).join("/")
-                      : pathname.replace(/\/$/, "");
-
-                  router.push(`${basePath}/${item.directSrc}`);
+                  setSelectedId(item.version);
+                  if (item.directSrc === "") {
+                    // nếu là Latest Version → không có version trong URL
+                    router.push(basePath);
+                  } else {
+                    // thêm version vào cuối URL
+                    router.push(`${basePath}/${item.directSrc}`);
+                  }
                 }}
               >
                 {item.icon}
@@ -104,7 +114,8 @@ export function VersionSwitcher({ VersionGuided, defaultModeGuided }: Props) {
                   <span>{item.name}</span>
                   <span className="text-[#a1a1a1]">{item.version}</span>
                 </div>
-                {item.name === selectedId && <Check className="ml-auto" />}
+
+                {item.version === selectedId && <Check className="ml-auto" />}
               </DropdownMenuItem>
             ))}
           </DropdownMenuContent>
