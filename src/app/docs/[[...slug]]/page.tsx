@@ -107,7 +107,6 @@ export default async function Page(props: {
   return (
     <DocsPage
       toc={page.data.toc}
-      // @ts-ignore
       full={page.data.full}
       breadcrumb={{ component: <DocsBreadcrumb tree={source.pageTree} /> }}
       tableOfContent={{
@@ -122,7 +121,7 @@ export default async function Page(props: {
         <DocsCopyPage
           className="min-[300px]:flex xl:hidden"
           // @ts-expect-error - revisit fumadocs types.
-          page={doc.content}
+          page={page.data.content}
           url={absoluteUrl(page.url)}
         />
       </div>
@@ -135,7 +134,7 @@ export default async function Page(props: {
         <DocsCopyPage
           className="min-[300px]:hidden xl:flex"
           // @ts-expect-error - revisit fumadocs types.
-          page={doc.content}
+          page={page.data.content}
           url={absoluteUrl(page.url)}
         />{" "}
       </div>
