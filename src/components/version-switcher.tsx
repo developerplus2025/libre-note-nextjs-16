@@ -13,7 +13,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 type VersionGuidedItem = {
   id: number;
@@ -30,10 +30,16 @@ type Props = {
 
 export function VersionSwitcher({ VersionGuided, defaultModeGuided }: Props) {
   const [selectedId, setSelectedId] = React.useState<number>(defaultModeGuided);
-
+  const pathname = usePathname();
+  const path = pathname.split("/");
+  console.log(path);
+  const [PathTwo, setPathTwo] = React.useState(path);
+  React.useEffect(() => {
+    setPathTwo(pathname.split("/"));
+  }, [pathname]);
   // tìm object đang được chọn
   const selectedItem = VersionGuided.find((item) => item.id === selectedId);
-const router = useRouter();
+  const router = useRouter();
   return (
     <SidebarMenu className="">
       <SidebarMenuItem>
@@ -70,8 +76,10 @@ const router = useRouter();
                 className="gap-[1rem] hover:!bg-[#1b1b1b]"
                 key={item.id}
                 onSelect={() => {
-                  setSelectedId(item.id),
-                    router.push(`/docs/${item.directSrc}`);
+                  setSelectedId(item.id);
+                  router.push(
+                    `/docs/${PathTwo[2] === "" ? "" : `${PathTwo[2]}/`}${item.directSrc}`,
+                  );
                 }}
               >
                 {item.icon}

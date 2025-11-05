@@ -2,5 +2,5 @@
   "title": "API Reference ",
   "description": "The guided for Developer",
   "root": true,
-  "pages": ["index", "(root)"]
+  "pages": ["index", "(root)", "5.4.2", "4.5.9"]
 }
