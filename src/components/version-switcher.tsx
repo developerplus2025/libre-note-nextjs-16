@@ -51,9 +51,9 @@ export function VersionSwitcher({ VersionGuided, defaultModeGuided }: Props) {
     setSelectedId(currentVersion);
   }, [pathname]);
 
-  const selectedItem = VersionGuided.find(
-    (item) => item.version === selectedId,
-  );
+  const selectedItem =
+    VersionGuided.find((item) => item.version === selectedId) ||
+    VersionGuided[0]; // fallback (Latest Version)
 
   const basePath = React.useMemo(() => {
     // loại bỏ phần version khỏi URL nếu có
