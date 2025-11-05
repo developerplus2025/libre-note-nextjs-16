@@ -36,14 +36,14 @@ export function ModeGuidedSwitcher({
   defaultModeGuided,
 }: {
   ModeGuided: ModeGuided;
-  defaultModeGuided: ModeGuided[keyof ModeGuided]["name"]; // 'docs' hoặc 'api'
+  defaultModeGuided: string; // 'docs' hoặc 'api'
 }) {
   const [selectedGuidedMode, setSelectedGuidedMode] = React.useState<
     keyof ModeGuided
   >(defaultModeGuided as keyof ModeGuided);
 
   const items = Object.entries(ModeGuided); // [['docs', {...}], ['api', {...}]]
-const router = useRouter();
+  const router = useRouter();
   return (
     <SidebarMenu className="">
       <SidebarMenuItem>
@@ -79,8 +79,8 @@ const router = useRouter();
                 className="gap-[1rem] hover:!bg-[#1b1b1b]"
                 key={key}
                 onSelect={() => {
-                  setSelectedGuidedMode(key as keyof ModeGuided),
-                    router.push(`/docs/${value.directSrc}`);
+                  (setSelectedGuidedMode(key as keyof ModeGuided),
+                    router.push(`/docs/${value.directSrc}`));
                 }}
               >
                 {value.icon}

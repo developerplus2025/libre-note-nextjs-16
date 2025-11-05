@@ -1,6 +1,12 @@
 "use client";
 import type * as PageTree from "fumadocs-core/page-tree";
-import { type ComponentProps, type ReactNode, useMemo } from "react";
+import {
+  type ComponentProps,
+  type ReactNode,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { cn } from "../../src/lib/cn";
 import { TreeContextProvider, useTreeContext } from "fumadocs-ui/contexts/tree";
 import Link from "fumadocs-core/link";
@@ -230,7 +236,18 @@ function Sidebar() {
 
     return renderItems(root.children);
   }, [root]);
-
+  const pathname = usePathname();
+  const [modeGuided, setModeGuided] = useState(
+    pathname.split("/")[pathname.length - 1],
+  );
+  const [versionGuided, setVersionGuided] = useState(
+    pathname.split("/")[pathname.length - 1],
+  );
+  useEffect(() => {
+    setModeGuided(pathname.split("/")[pathname.length - 1]);
+    setVersionGuided(pathname.split("/")[pathname.length - 1]);
+  }, [pathname]);
+  
   return (
     <aside
       className={cn(
@@ -242,9 +259,16 @@ function Sidebar() {
       <SidebarProvider className="flex min-h-[100px] flex-col gap-[1rem]">
         <ModeGuidedSwitcher
           ModeGuided={data.mode}
-          defaultModeGuided={data.mode.docs.name}
+          defaultModeGuided={modeGuided}
         />
-        <VersionSwitcher VersionGuided={version} defaultModeGuided={1} />
+        <VersionSwitcher
+          VersionGuided={version}
+          defaultModeGuided={
+            versionGuided === "docs" || "api-reference"
+              ? "Version 4"
+              : `${versionGuided}`
+          }
+        />
       </SidebarProvider>
       <ScrollArea className="md:h-[calc(100dvh-118px)]">{children}</ScrollArea>
     </aside>
