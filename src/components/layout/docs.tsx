@@ -263,11 +263,7 @@ function Sidebar() {
         />
         <VersionSwitcher
           VersionGuided={version}
-          defaultModeGuided={
-            versionGuided === "docs" || "api-reference"
-              ? "Version 4"
-              : `${versionGuided}`
-          }
+          defaultModeGuided={"Latest Version"}
         />
       </SidebarProvider>
       <ScrollArea className="md:h-[calc(100dvh-118px)]">{children}</ScrollArea>

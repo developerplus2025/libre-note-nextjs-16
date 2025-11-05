@@ -25,23 +25,36 @@ type VersionGuidedItem = {
 
 type Props = {
   VersionGuided: VersionGuidedItem[];
-  defaultModeGuided: string; // id của version mặc định
+  defaultModeGuided: string; // version mặc định (vd: "5.4.2")
 };
 
 export function VersionSwitcher({ VersionGuided, defaultModeGuided }: Props) {
-  const [selectedId, setSelectedId] = React.useState<string>(defaultModeGuided);
   const pathname = usePathname();
-  const path = pathname.split("/");
-  console.log(path);
-  const [PathTwo, setPathTwo] = React.useState(path);
-  React.useEffect(() => {
-    setPathTwo(pathname.split("/"));
-  }, [pathname]);
-  // tìm object đang được chọn
-  const selectedItem = VersionGuided.find((item) => item.name === selectedId);
   const router = useRouter();
+
+  // lấy các phần trong URL
+  const segments = pathname.split("/").filter(Boolean); // loại bỏ phần rỗng
+
+  // logic lấy version từ URL
+  const currentVersion = segments[segments.length - 1]?.match(/^\d+(\.\d+)*$/) // kiểm tra xem có phải version dạng 1.0.0
+    ? segments[segments.length - 1]
+    : segments.length > 2 && segments[2]?.match(/^\d+(\.\d+)*$/)
+      ? segments[2]
+      : defaultModeGuided;
+
+  const [selectedId, setSelectedId] = React.useState<string>(currentVersion);
+
+  // Cập nhật khi pathname thay đổi
+  React.useEffect(() => {
+    setSelectedId(currentVersion);
+  }, [pathname]);
+
+  const selectedItem = VersionGuided.find(
+    (item) => item.name === selectedId || item.version === selectedId,
+  );
+
   return (
-    <SidebarMenu className="">
+    <SidebarMenu>
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger
@@ -57,10 +70,10 @@ export function VersionSwitcher({ VersionGuided, defaultModeGuided }: Props) {
               </div>
               <div className="flex flex-col gap-0.5 leading-none">
                 <span className="text-xs font-medium">
-                  Using {selectedItem?.name}
+                  Using {selectedItem?.name || "Unknown"}
                 </span>
                 <span className="text-xs text-[#a1a1a1]">
-                  {selectedItem?.version}
+                  {selectedItem?.version || defaultModeGuided}
                 </span>
               </div>
               <ChevronsUpDown className="ml-auto" />
@@ -73,13 +86,17 @@ export function VersionSwitcher({ VersionGuided, defaultModeGuided }: Props) {
           >
             {VersionGuided.map((item) => (
               <DropdownMenuItem
-                className="gap-[1rem] hover:!bg-[#1b1b1b]"
                 key={item.id}
+                className="gap-[1rem] hover:!bg-[#1b1b1b]"
                 onSelect={() => {
                   setSelectedId(item.name);
-                  router.push(
-                    `/docs/${PathTwo[2] === "" ? "" : `${PathTwo[2]}/`}${item.directSrc}`,
-                  );
+                  // giữ nguyên phần đầu của path, chỉ thay version
+                  const basePath =
+                    segments.length >= 3 && segments[2].match(/^\d+(\.\d+)*$/)
+                      ? segments.slice(0, -1).join("/")
+                      : pathname.replace(/\/$/, "");
+
+                  router.push(`${basePath}/${item.directSrc}`);
                 }}
               >
                 {item.icon}
@@ -87,7 +104,6 @@ export function VersionSwitcher({ VersionGuided, defaultModeGuided }: Props) {
                   <span>{item.name}</span>
                   <span className="text-[#a1a1a1]">{item.version}</span>
                 </div>
-
                 {item.name === selectedId && <Check className="ml-auto" />}
               </DropdownMenuItem>
             ))}
