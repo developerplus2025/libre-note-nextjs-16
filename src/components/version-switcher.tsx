@@ -20,7 +20,7 @@ type VersionItem = {
   name: string;
   version: string;
   icon: React.JSX.Element;
-  directSrc: string;
+  directSrc: string; // ví dụ: "4.5.9", "6.7.8"
 };
 
 export function VersionSwitcher({
@@ -31,22 +31,34 @@ export function VersionSwitcher({
   const router = useRouter();
   const pathname = usePathname();
 
-  // 🔹 Lấy phiên bản từ URL, vd: /docs/5.4.2/... => "5.4.2"
-  const initialVersion =
-    VersionGuided.find((v) => pathname.includes(v.directSrc))?.name ||
+  // 🔹 Phân tích đường dẫn để lấy phần version (vd: "4.5.9" trong /docs/api-reference/4.5.9/getting-started)
+  const pathParts = pathname.split("/").filter(Boolean);
+  const versionPart =
+    pathParts.length >= 3
+      ? pathParts[pathParts.length - 2] // nếu có slug con (như "getting-started")
+      : pathParts[pathParts.length - 1]; // nếu không có slug con
+
+  // 🔹 Xác định version từ URL
+  const matchedVersion =
+    VersionGuided.find((v) => versionPart.includes(v.directSrc))?.name ||
     "Latest Version";
 
-  const [selectedVersion, setSelectedVersion] = React.useState(initialVersion);
+  const [selectedVersion, setSelectedVersion] = React.useState(matchedVersion);
 
   // 🔹 Cập nhật khi pathname thay đổi
   React.useEffect(() => {
+    const pathParts = pathname.split("/").filter(Boolean);
+    const versionPart =
+      pathParts.length >= 3
+        ? pathParts[pathParts.length - 2]
+        : pathParts[pathParts.length - 1];
+
     const matched =
-      VersionGuided.find((v) => pathname.includes(v.directSrc))?.name ||
+      VersionGuided.find((v) => versionPart.includes(v.directSrc))?.name ||
       "Latest Version";
     setSelectedVersion(matched);
   }, [pathname, VersionGuided]);
 
-  // 🔒 Nếu chưa có dữ liệu
   const current = VersionGuided.find((v) => v.name === selectedVersion);
   if (!current) return null;
 
@@ -85,7 +97,10 @@ export function VersionSwitcher({
                 className="gap-[1rem] hover:!bg-[#1b1b1b]"
                 onSelect={() => {
                   setSelectedVersion(item.name);
-                  router.push(`/docs/${item.directSrc}`);
+
+                  // 🔹 Giữ nguyên phần mode (docs/api-reference)
+                  const basePath = pathParts.slice(0, 2).join("/");
+                  router.push(`/${basePath}/${item.directSrc}`);
                 }}
               >
                 {item.icon}
