@@ -21,7 +21,7 @@ type ModeItem = {
   name: string;
   title: string;
   description: string;
-  directSrc: string;
+  directSrc: string; // ví dụ: "api-reference" hoặc ""
 };
 
 type ModeGuided = {
@@ -31,26 +31,43 @@ type ModeGuided = {
 
 export function ModeGuidedSwitcher({ ModeGuided }: { ModeGuided: ModeGuided }) {
   const router = useRouter();
-  const pathname = usePathname();
+  const pathname = usePathname() ?? "";
 
+  // Xác định mode hiện tại theo pathname
   const [selectedGuidedMode, setSelectedGuidedMode] = React.useState<
     keyof ModeGuided
   >(pathname.includes("api-reference") ? "api" : "docs");
 
- // 🔹 Xác định mode dựa theo pathname
- React.useEffect(() => {
-   if (pathname.includes("api-reference")) {
-     setSelectedGuidedMode("api");
-   } else {
-     setSelectedGuidedMode("docs");
-   }
- }, [pathname]);
+  // Cập nhật lại khi pathname thay đổi
+  React.useEffect(() => {
+    if (pathname.includes("api-reference")) {
+      setSelectedGuidedMode("api");
+    } else {
+      setSelectedGuidedMode("docs");
+    }
+  }, [pathname]);
 
-  const items = Object.entries(ModeGuided); // [['docs', {...}], ['api', {...}]]
+  // Lấy version hiện tại từ URL
+  const version =
+    pathname.split("/").find((seg) => /^\d+\.\d+(\.\d+)?$/.test(seg)) ??
+    "latest";
 
+  // Render
+  const items = Object.entries(ModeGuided);
   const current = ModeGuided[selectedGuidedMode];
+  if (!current) return null;
 
-  if (!current) return null; // tránh crash khi chưa có dữ liệu
+  // Hàm tạo URL đúng với version
+  function buildNewPath(targetSrc: string) {
+    const base = "/docs";
+    // nếu có version -> chèn vào sau mode
+    if (version && version !== "latest") {
+      return targetSrc
+        ? `${base}/${targetSrc}/${version}`
+        : `${base}/${version}`;
+    }
+    return targetSrc ? `${base}/${targetSrc}` : base;
+  }
 
   return (
     <SidebarMenu>
@@ -87,7 +104,8 @@ export function ModeGuidedSwitcher({ ModeGuided }: { ModeGuided: ModeGuided }) {
                 className="gap-[1rem] hover:!bg-[#1b1b1b]"
                 onSelect={() => {
                   setSelectedGuidedMode(key as keyof ModeGuided);
-                  router.push(`/docs/${value.directSrc}`);
+                  const newPath = buildNewPath(value.directSrc);
+                  router.push(newPath);
                 }}
               >
                 {value.icon}
