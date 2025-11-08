@@ -31,20 +31,25 @@ export function VersionSwitcher({
   const router = useRouter();
   const pathname = usePathname();
 
-  // 🔹 Lấy version từ đường dẫn cuối cùng
-  const pathSegments = pathname.split("/");
-  const versionSegment = pathSegments[pathSegments.length - 1];
+  // 🔹 Cắt đường dẫn thành mảng
+  const segments = pathname.split("/").filter(Boolean);
+  // 🔹 Tìm phần "basePath" giữa "docs" và "version"
+  const docsIndex = segments.indexOf("docs");
+  const basePath = segments[docsIndex + 1]; // ví dụ: "api-reference"
+  const currentVersion = segments[docsIndex + 2]; // ví dụ: "4.5.9"
+
   const matchedVersion =
-    VersionGuided.find((v) => versionSegment.includes(v.directSrc))?.name ||
+    VersionGuided.find((v) => v.directSrc === currentVersion)?.name ||
     "Latest Version";
 
   const [selectedVersion, setSelectedVersion] = React.useState(matchedVersion);
 
   React.useEffect(() => {
-    const newSegment = pathname.split("/").at(-1);
+    const segments = pathname.split("/").filter(Boolean);
+    const docsIndex = segments.indexOf("docs");
+    const ver = segments[docsIndex + 2];
     const matched =
-      VersionGuided.find((v) => newSegment?.includes(v.directSrc))?.name ||
-      "Latest Version";
+      VersionGuided.find((v) => v.directSrc === ver)?.name || "Latest Version";
     setSelectedVersion(matched);
   }, [pathname, VersionGuided]);
 
@@ -87,9 +92,13 @@ export function VersionSwitcher({
                 onSelect={() => {
                   setSelectedVersion(item.name);
 
-                  // 🔹 Giữ nguyên đường dẫn gốc (vd: /docs/api-reference/4.5.9/getting-started)
-                  const basePath = pathname.split("/docs/")[1]?.split("/")[0];
-                  router.push(`/docs/${basePath}/${item.directSrc}`);
+                  // 🔹 Giữ nguyên subpath phía sau version (nếu có)
+                  const afterVersion = segments.slice(docsIndex + 3).join("/");
+                  const newPath = `/docs/${basePath}/${item.directSrc}${
+                    afterVersion ? `/${afterVersion}` : ""
+                  }`;
+
+                  router.push(newPath);
                 }}
               >
                 {item.icon}
