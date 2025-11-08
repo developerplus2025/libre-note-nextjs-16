@@ -29,7 +29,7 @@
     }
   },
   "scripts": {
-    "postinstall": "fumadocs-mdx & patch-package",
+    "postinstall": "fumadocs-mdx & patch-package --turbopack",
     "tauri": "tauri dev",
     "dev": "next dev  ",
     "build": "next build  ",
