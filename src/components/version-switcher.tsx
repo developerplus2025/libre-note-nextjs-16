@@ -29,32 +29,101 @@ export function VersionSwitcher({
   VersionGuided: VersionItem[];
 }) {
   const router = useRouter();
-  const pathname = usePathname();
+  const pathname = usePathname() ?? "";
 
-  // 🔹 Cắt đường dẫn thành mảng
-  const segments = pathname.split("/").filter(Boolean);
-  // 🔹 Tìm phần "basePath" giữa "docs" và "version"
-  const docsIndex = segments.indexOf("docs");
-  const basePath = segments[docsIndex + 1]; // ví dụ: "api-reference"
-  const currentVersion = segments[docsIndex + 2]; // ví dụ: "4.5.9"
+  // Tách segments an toàn
+  const segments = pathname.split("/").filter(Boolean); // ["docs", "api-reference", "4.5.9", "getting-started"]
 
-  const matchedVersion =
-    VersionGuided.find((v) => v.directSrc === currentVersion)?.name ||
-    "Latest Version";
+  // Tìm vị trí của "docs" nếu có
+  let docsIndex = segments.indexOf("docs");
+  if (docsIndex === -1) {
+    // nếu không có 'docs' trong segments, cố gắng suy đoán: nếu path bắt đầu bằng 'docs' (sử dụng pathname),
+    // hoặc để docsIndex = 0 nếu segments[0] looks like base (fallback).
+    if (pathname.startsWith("/docs")) docsIndex = 0;
+    else docsIndex = -1;
+  }
 
-  const [selectedVersion, setSelectedVersion] = React.useState(matchedVersion);
+  // Lấy basePath (ví dụ "api-reference") và currentVersion an toàn
+  const basePath =
+    docsIndex >= 0 && segments.length > docsIndex + 1
+      ? segments[docsIndex + 1]
+      : undefined;
+
+  const currentVersionSegment =
+    docsIndex >= 0 && segments.length > docsIndex + 2
+      ? segments[docsIndex + 2]
+      : // nếu không có structure /docs/<base>/<version>, có thể version ở cuối:
+        segments.length > 0
+        ? segments[segments.length - 1]
+        : undefined;
+
+  // Tìm object version match bất kỳ segment nào (an toàn hơn)
+  const matchedVersionObj =
+    VersionGuided.find((v) => segments.includes(v.directSrc)) ??
+    VersionGuided.find((v) => v.directSrc === currentVersionSegment) ??
+    undefined;
+
+  // fallback name
+  const initialName =
+    matchedVersionObj?.name ?? VersionGuided[0]?.name ?? "Latest Version";
+
+  const [selectedVersion, setSelectedVersion] =
+    React.useState<string>(initialName);
 
   React.useEffect(() => {
-    const segments = pathname.split("/").filter(Boolean);
-    const docsIndex = segments.indexOf("docs");
-    const ver = segments[docsIndex + 2];
+    // Mỗi khi pathname/VersionGuided thay đổi, cập nhật state
+    const segs = (pathname ?? "").split("/").filter(Boolean);
     const matched =
-      VersionGuided.find((v) => v.directSrc === ver)?.name || "Latest Version";
-    setSelectedVersion(matched);
+      VersionGuided.find((v) => segs.includes(v.directSrc)) ??
+      VersionGuided.find((v) => v.directSrc === segs[segs.length - 1]) ??
+      undefined;
+    const name = matched?.name ?? VersionGuided[0]?.name ?? "Latest Version";
+    setSelectedVersion(name);
   }, [pathname, VersionGuided]);
 
-  const current = VersionGuided.find((v) => v.name === selectedVersion);
-  if (!current) return null;
+  const current =
+    VersionGuided.find((v) => v.name === selectedVersion) ?? VersionGuided[0];
+  if (!current) {
+    // không có dữ liệu version nào → không render
+    console.warn("VersionSwitcher: VersionGuided is empty or malformed");
+    return null;
+  }
+
+  // Helper: build new path when user picks version
+  function buildPathForVersion(item: VersionItem) {
+    // giữ lại everything after version if present
+    // xác định index của current.directSrc trong segments (nếu có)
+    const segs = (pathname ?? "").split("/").filter(Boolean);
+
+    // tìm vị trí của version hiện tại trong segments (nếu có)
+    const currentVersionIndex = segs.findIndex((s) => s === current.directSrc);
+
+    // nếu không tìm thấy current version index, ta sẽ thay thế tại vị trí docsIndex+2 (nếu hợp lệ)
+    let beforeVersionSegments: string[] = [];
+    let afterVersionSegments: string[] = [];
+
+    if (currentVersionIndex !== -1) {
+      beforeVersionSegments = segs.slice(0, currentVersionIndex);
+      afterVersionSegments = segs.slice(currentVersionIndex + 1); // giữ slug phía sau version
+    } else if (docsIndex >= 0 && segs.length > docsIndex + 1) {
+      // giả sử cấu trúc /docs/<base>/<version>/...
+      beforeVersionSegments = segs.slice(0, docsIndex + 2); // up to basePath
+      afterVersionSegments = segs.slice(docsIndex + 3); // phần sau version nếu có
+    } else {
+      // fallback: nếu đường dẫn đơn giản như /docs/4.5.9 hoặc /4.5.9
+      // giữ 'docs' nếu có, rồi thêm version
+      beforeVersionSegments = segs[0] === "docs" ? ["docs"] : [];
+      afterVersionSegments = segs.slice(beforeVersionSegments.length + 1);
+    }
+
+    // build: before + new version + after
+    const newSegments = [
+      ...beforeVersionSegments,
+      item.directSrc,
+      ...afterVersionSegments,
+    ];
+    return "/" + newSegments.join("/");
+  }
 
   return (
     <SidebarMenu>
@@ -91,14 +160,11 @@ export function VersionSwitcher({
                 className="gap-[1rem] hover:!bg-[#1b1b1b]"
                 onSelect={() => {
                   setSelectedVersion(item.name);
+                  const nextPath = buildPathForVersion(item);
 
-                  // 🔹 Giữ nguyên subpath phía sau version (nếu có)
-                  const afterVersion = segments.slice(docsIndex + 3).join("/");
-                  const newPath = `/docs/${basePath}/${item.directSrc}${
-                    afterVersion ? `/${afterVersion}` : ""
-                  }`;
-
-                  router.push(newPath);
+                  // debug log (xóa hoặc comment khi ổn)
+                  console.info("VersionSwitcher -> navigate to:", nextPath);
+                  router.push(nextPath);
                 }}
               >
                 {item.icon}
