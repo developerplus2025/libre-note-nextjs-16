@@ -14,9 +14,9 @@ import BlurCollapsible from "@/components/BlurCollapsible";
 import BlockTheme from "../docs/components/block-theme";
 import { Metadata } from "next";
 import ContentHome from "./content-home";
-const title = "Decent: The Open Source AI Music Studio";
+const title = "Phan Thanh Tùng";
 const description =
-  "Dive into a seamless music experience with our cutting edge software. Collaborate effortlessly, unleash your creativity, manage playlists and craft professional quality tracks all in one powerful platform.";
+  "Bị Gay 👨‍❤️‍👨 👨‍❤️‍👨 👨‍❤️‍👨 👨‍❤️‍👨";
 
 export const dynamic = "force-static";
 export const revalidate = false;
