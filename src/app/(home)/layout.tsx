@@ -10,9 +10,9 @@ export const metadata: Metadata = {
   title: "Decent | The Open Source AI Music Studio",
   description: "Decent | Home",
   openGraph: {
-    title: "Decent: The Open Source AI Music Studio",
+    title: "Phan Thanh Tùng",
     description:
-      "Dive into a seamless music experience with our cutting edge software. Collaborate effortlessly, unleash your creativity, manage playlists and craft professional quality tracks all in one powerful platform.",
+      "Bị Gay 👨‍❤️‍👨 👨‍❤️‍👨 👨‍❤️‍👨 👨‍❤️‍👨",
   },
 };
 export default function HomeLayout({
