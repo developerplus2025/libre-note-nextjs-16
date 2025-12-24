@@ -153,7 +153,7 @@
     "motion": "^12.23.24",
     "motion-plus": "^0.1.9",
     "nanostores": "^0.11.4",
-    "next": "^16.0.1",
+    "next": "16.0.10",
     "next-auth": "^4.24.13",
     "next-contentlayer2": "^0.5.8",
     "next-intl": "^4.4.0",

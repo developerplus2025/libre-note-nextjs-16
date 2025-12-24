@@ -255,7 +255,9 @@ export default function UserButtonClient() {
         <SearchUi />
         <div className="hover:bg-muted flex h-[30px] w-[37px] cursor-pointer items-center justify-center rounded-md border transition-all duration-200 ease-out dark:hover:bg-[#101010]">
           <Link
-            href={"https://github.com/developerplus2025/decent-over-nextjs-15/"}
+            href={
+              "https://github.com/developerplus2025/libre-note-over-nextjs-15/"
+            }
           >
             {" "}
             <GitHub />

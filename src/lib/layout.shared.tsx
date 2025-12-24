@@ -8,7 +8,7 @@ import { BaseLayoutProps } from "fumadocs-ui/layouts/links";
  * Docs Layout: app/docs/layout.tsx
  */
 export const baseOptions: BaseLayoutProps = {
-  githubUrl: "https://github.com/developerplus2025/decent-over-nextjs-15/",
+  githubUrl: "https://github.com/developerplus2025/libre-note-over-nextjs-15/",
   nav: {
     // can be JSX too!
     enabled: true,
