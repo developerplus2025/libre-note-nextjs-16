@@ -14,9 +14,10 @@ import BlurCollapsible from "@/components/BlurCollapsible";
 import BlockTheme from "../docs/components/block-theme";
 import { Metadata } from "next";
 import ContentHome from "./content-home";
-const title = "Phan Thanh Tùng Bị Gay";
+const title = "The Open Source AI Music Studio";
+
 const description =
-  "Bị Gay Ai Có Nhu Cầu Gay với mình bấm vào link. Quỷ xứ à 😘";
+  "Dive into a seamless music experience with our cutting edge software. Collaborate effortlessly, unleash your creativity, manage playlists and craft professional quality tracks all in one powerful platform.";
 
 export const dynamic = "force-static";
 export const revalidate = false;

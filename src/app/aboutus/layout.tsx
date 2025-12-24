@@ -10,3 +10,4 @@ export default function AboutUsLayout({
 }) {
   return <section>{children}</section>;
 }
+  
