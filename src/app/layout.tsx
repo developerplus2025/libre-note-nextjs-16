@@ -1,36 +1,24 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { fontVariables } from "@/lib/fonts";
 import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
 // import { Toaster, toast } from "sonner";
 import { ThemeProvider } from "@/components/ui/theme-provider";
-import Image from "next/image";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
-import { DocsNavigation } from "@/components/DocsNavigation";
-import Providers from "@/components/ProgressBarProvider";
 import Footer from "@/components/footer";
 import { Toaster } from "@/components/ui/sonner";
-import CookieAlert from "@/components/cookie-alert";
 import { RootProvider } from "fumadocs-ui/provider/next";
-import FrameVideo from "./(home)/components/frame-video";
 import { Analytics } from "@vercel/analytics/react";
 import NavigationMobile from "@/components/Navigation-Mobile";
 import { cn } from "@/lib/utils";
 import SearchDialog from "@/components/search";
 import Navigation from "@/components/Navigation";
-import {
-  CookieBanner,
-  ConsentManagerProvider,
-  ConsentManagerDialog,
-} from "@c15t/nextjs";
+import { ConsentManagerProvider, ConsentManagerDialog } from "@c15t/nextjs";
 import CustomAcceptButton from "@/components/CustomHeaderCookie";
-import { Suspense, unstable_ViewTransition as ViewTransition } from "react";
+import { Suspense } from "react";
 import { SettingsParams } from "@/components/theme-params";
 import { Loader } from "@/components/ui/loader";
 import SmoothScroll from "@/components/SmoothScrollLenis";
-const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Decent: Buy and Sell Pi Network",
   description: "Decent App ",
@@ -122,7 +110,7 @@ export default function RootLayout({
                 }}
                 offset={{ top: "5rem" }}
                 closeButton
-                className={` ${GeistSans.className} !border-[#2c2c2c]`}
+                className={` ${GeistSans.className} border-[#2c2c2c]!`}
                 position="top-center"
               />
               <RootProvider
