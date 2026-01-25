@@ -26,9 +26,9 @@ function ServerPage() {
   useEffect(() => {}, [rank]);
 
   return (
-    <div className="mb-[3rem] flex flex-col gap-[6rem]">
+    <div className="mb-12 flex flex-col gap-24">
       {/* Grid hiển thị dữ liệu */}
-      <div className="grid grid-cols-3 place-items-center justify-items-center gap-[2rem]">
+      <div className="grid grid-cols-3 place-items-center justify-items-center gap-8">
         {Data[`rank${rank}`]?.map((data, index) => (
           <div
             key={`rank${rank}-${index}`}
