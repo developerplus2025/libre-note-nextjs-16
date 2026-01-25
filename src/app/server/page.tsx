@@ -45,6 +45,7 @@ function ServerPage() {
           {/* Previous */}
           <PaginationItem className="cursor-pointer">
             <PaginationPrevious
+              size={""}
               onClick={() => setRank(Math.max(1, rank - 1))}
               aria-disabled={rank <= 1}
               className={rank <= 1 ? "pointer-events-none opacity-50" : ""}
@@ -55,6 +56,7 @@ function ServerPage() {
           {PaginationItems.map((data) => (
             <PaginationItem className="cursor-pointer" key={data.rank}>
               <PaginationLink
+                size={""}
                 isActive={data.rank === rank}
                 onClick={() => router.push(`/server?page=${data.rank}`)}
               >
@@ -66,6 +68,7 @@ function ServerPage() {
           {/* Next */}
           <PaginationItem className="cursor-pointer">
             <PaginationNext
+              size={""}
               onClick={() =>
                 setRank(Math.min(PaginationItems.length, rank + 1))
               }
