@@ -61,6 +61,36 @@
   --lp-timeline-track-height: 4px;
   --lp-timeline-track-height-active: 7px;
   --color-lp-timeline-buffered-color: var(--lp-timeline-buffered-color);
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  /*
+  ---break---
+*/
+  @keyframes accordion-down {
+    from {
+      height: 0;
+
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+
+    }
+
+  }
+  /*
+  ---break---
+*/
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+
+    }
+    to {
+      height: 0;
+
+    }
+
+  }
 
 }
 /*
