@@ -245,7 +245,7 @@ export default function UserButtonClient() {
         <div className="hover:bg-muted flex h-[30px] w-[37px] cursor-pointer items-center justify-center rounded-md border transition-all duration-200 ease-out dark:hover:bg-[#101010]">
           <Link
             href={
-              "https://github.com/developerplus2026/libre-note-over-nextjs-15/"
+              "https://github.com/developerplus2026/libre-note-over-nextjs-16/"
             }
           >
             {" "}
