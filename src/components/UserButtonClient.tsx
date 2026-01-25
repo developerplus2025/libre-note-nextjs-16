@@ -1,28 +1,19 @@
 "use client";
 import {
-  useClick,
   useInteractions,
   useFloating,
   offset,
-  flip,
-  shift,
   size,
   autoUpdate,
-  limitShift,
-  hide,
-  arrow as floatingUIarrow,
-  FloatingFocusManager,
-  useTransitionStyles,
   useDismiss,
   useTransitionStatus,
 } from "@floating-ui/react";
 import { authClient } from "@/lib/auth-client";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { ThemeToggle } from "./ThemeToggle";
 import FeedBack from "./feedback";
 import GitHub from "./GitHub";
 import X from "./x";
@@ -142,7 +133,6 @@ export default function UserButtonClient() {
     data: session,
 
     isPending, //loading state
-    error, //error object
     refetch, //refetch the session
   } = authClient.useSession();
 
@@ -156,7 +146,6 @@ export default function UserButtonClient() {
     visible: { opacity: 1, display: "flex" },
     hidden: { opacity: 0, transitionEnd: { display: "none" } },
   };
-  const [open, setOpen] = useState("closed");
   const [isOpen, setIsOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -199,14 +188,14 @@ export default function UserButtonClient() {
   const dismiss = useDismiss(context, { outsidePressEvent: "mousedown" });
 
   // 👇 Transition hook from Floating UI
-  const { isMounted, status } = useTransitionStatus(context, {
+  const { isMounted } = useTransitionStatus(context, {
     duration: {
       open: 200,
       close: 100,
     },
   });
   const { getReferenceProps, getFloatingProps } = useInteractions([dismiss]);
-  const { setOpenSearch } = useSearchContext();
+  useSearchContext();
   if (isPending) {
     return <Loader variant={"classic"} size={"sm"} />;
   }
@@ -275,13 +264,13 @@ export default function UserButtonClient() {
         {session?.user && (
           <div>
             <div
-              ref={refs.setReference}
+              ref={(node) => refs.setReference(node)}
               {...getReferenceProps()}
               onClick={() => setIsOpen(!isOpen)}
               className="cursor-pointer"
             >
               <Image
-                className="h-[40px] w-[40px] dark:invert-[1]"
+                className="h-10 w-10 dark:invert-[1]"
                 alt="person"
                 src="/person-circle-outline.svg"
                 width="20"
@@ -303,7 +292,7 @@ export default function UserButtonClient() {
             {isMounted && (
               <div
                 {...getFloatingProps()}
-                ref={refs.setFloating}
+                ref={(node) => refs.setFloating(node)}
                 style={floatingStyles}
               >
                 <div
@@ -422,7 +411,7 @@ export default function UserButtonClient() {
                 >
                   <Button
                     variant="outline"
-                    className="hover:bg-accent flex h-[32px] items-center dark:hover:bg-[#1a1a1a]"
+                    className="hover:bg-accent flex h-8 items-center dark:hover:bg-[#1a1a1a]"
                   >
                     Sign In
                   </Button>
@@ -438,7 +427,7 @@ export default function UserButtonClient() {
                 >
                   <Button
                     variant="outline"
-                    className="h-[32px] gap-1 [&_svg]:size-[15px]"
+                    className="h-8 gap-1 [&_svg]:size-[15px]"
                   >
                     Create Account
                     <svg
