@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "../globals.css";
 import { GeistSans } from "geist/font/sans";
 import Image from "next/image";
 
@@ -11,8 +10,7 @@ export const metadata: Metadata = {
   description: "Decent | Home",
   openGraph: {
     title: "Phan Thanh Tùng",
-    description:
-      "Bị Gay 👨‍❤️‍👨 👨‍❤️‍👨 👨‍❤️‍👨 👨‍❤️‍👨",
+    description: "Bị Gay 👨‍❤️‍👨 👨‍❤️‍👨 👨‍❤️‍👨 👨‍❤️‍👨",
   },
 };
 export default function HomeLayout({
