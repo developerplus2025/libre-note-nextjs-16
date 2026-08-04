@@ -9,8 +9,8 @@ export const metadata: Metadata = {
   title: "Decent | The Open Source AI Music Studio",
   description: "Decent | Home",
   openGraph: {
-    title: "Phan Thanh Tùng",
-    description: "Bị Gay 👨‍❤️‍👨 👨‍❤️‍👨 👨‍❤️‍👨 👨‍❤️‍👨",
+    title: "",
+    description: "",
   },
 };
 export default function HomeLayout({
